@@ -9,7 +9,6 @@ import snapshot from '../data/contributions.json';
   <div class="scroll"><div class="grid" id="h-grid"></div></div>
   <div class="bottom">
     <span class="detail" id="h-detail">Hover a day</span>
-    <span class="range" id="h-range"><button data-r="rowanstead" class="on">Since Rowanstead</button><button data-r="90">90 days</button><button data-r="year">Year</button></span>
     <span>Less<span class="sw"><i></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i></span>More</span>
   </div>
 </div>
@@ -51,15 +50,11 @@ import snapshot from '../data/contributions.json';
     grid.onmouseleave();
     grid.scrollIntoView?.({ inline: 'end', block: 'nearest' });
   }
-  document.getElementById('h-range').onclick = (e) => {
-    const b = e.target.closest('button'); if (!b) return;
-    range = b.dataset.r; document.querySelectorAll('#h-range button').forEach((x) => x.classList.toggle('on', x === b)); render();
-  };
   render();
   async function live() {
     try {
       const y = new Date().getFullYear();
-      const rs = await Promise.all([y - 1, y].map((yy) => fetch(`https://github-contributions-api.jogruber.de/v4/gshost1?y=${yy}`).then((r) => r.json())));
+      const rs = await Promise.all([...new Set([2026, y])].map((yy) => fetch(`https://github-contributions-api.jogruber.de/v4/gshost1?y=${yy}`).then((r) => r.json())));
       const merged = rs.flatMap((r) => r.contributions).map((d) => ({ date: d.date, count: d.count }));
       if (merged.length) {
         all = merged.sort((a, b) => a.date.localeCompare(b.date));
