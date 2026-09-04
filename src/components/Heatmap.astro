@@ -3,13 +3,22 @@ import snapshot from '../data/contributions.json';
 ---
 <div class="heat" id="heat" data-snapshot={JSON.stringify(snapshot.days)}>
   <div class="top">
-    <div class="total"><span id="h-total">{snapshot.total.toLocaleString()}</span><small id="h-label">contributions since Jul 27, 2026</small></div>
-    <div class="status"><span class="dot" id="h-dot"></span><span id="h-status">snapshot</span></div>
+    <span class="title">GitHub activity since the first Rowanstead commit, Jul 27 2026</span>
+    <span class="status"><span class="dot" id="h-dot"></span><span id="h-status">snapshot</span></span>
   </div>
-  <div class="scroll"><div class="grid" id="h-grid"></div></div>
-  <div class="bottom">
-    <span class="detail" id="h-detail">Hover a day</span>
-    <span>Less<span class="sw"><i></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i></span>More</span>
+  <div class="body">
+    <div class="kpis">
+      <div class="kpi"><b id="h-total">{snapshot.total.toLocaleString()}</b><span>contributions</span></div>
+      <div class="kpi"><b id="h-avg">–</b><span>per day, average</span></div>
+      <div class="kpi"><b id="h-streak">–</b><span>day streak, current</span></div>
+    </div>
+    <div class="gridwrap">
+      <div class="grid" id="h-grid"></div>
+      <div class="bottom">
+        <span class="detail" id="h-detail">Hover a day</span>
+        <span>Less<span class="sw"><i></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i></span>More</span>
+      </div>
+    </div>
   </div>
 </div>
 <script>
@@ -32,7 +41,7 @@ import snapshot from '../data/contributions.json';
     const days = slice();
     grid.innerHTML = '';
     const pad = new Date(days[0].date + 'T00:00:00Z').getUTCDay();
-    for (let i = 0; i < pad; i++) grid.appendChild(Object.assign(document.createElement('div'), { style: 'width:13px;height:13px' }));
+    for (let i = 0; i < pad; i++) grid.appendChild(Object.assign(document.createElement('div'), { className: 'pad' }));
     days.forEach((d, i) => {
       const c = document.createElement('div');
       c.className = 'd ' + level(d.count);
@@ -45,10 +54,11 @@ import snapshot from '../data/contributions.json';
     const total = days.reduce((a, b) => a + b.count, 0);
     const busiest = days.reduce((a, b) => (b.count > a.count ? b : a));
     document.getElementById('h-total').textContent = total.toLocaleString();
-    document.getElementById('h-label').textContent = range === 'rowanstead' ? 'contributions since the first Rowanstead commit' : range === '90' ? 'contributions in the last 90 days' : 'contributions in the last year';
+    document.getElementById('h-avg').textContent = (total / days.length).toFixed(1);
+    let streak = 0; for (let i = days.length - 1; i >= 0 && days[i].count > 0; i--) streak++;
+    document.getElementById('h-streak').textContent = String(streak);
     grid.onmouseleave = () => { detail.textContent = `Busiest day ${fmt(busiest.date).replace(/, \d{4}$/, '')}, ${busiest.count} contributions`; };
     grid.onmouseleave();
-    grid.scrollIntoView?.({ inline: 'end', block: 'nearest' });
   }
   render();
   async function live() {
