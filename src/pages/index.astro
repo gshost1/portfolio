@@ -12,10 +12,11 @@ const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
     <aside class="side">
       <div>
         <h1><a href="/">Georgiy Shostakovich</a></h1>
-        <div class="role">Founder. I ship products alone by running a team of coding agents.</div>
-        <p class="tag">Built and shipped Rowanstead, an eldercare coordination app, from first commit to App Store review in five weeks. Now building tools that read financial filings.</p>
+        <div class="role">I build the system that ships the product.</div>
+        <p class="tag">Solo founder. In five weeks I went from a blank repo to an iOS app in App Store review, by building and rebuilding the agent setup around it every time it broke.</p>
         <nav class="secnav">
           <a href="#about">About</a>
+          <a href="#system">The system</a>
           <a href="#rowanstead">Rowanstead</a>
           <a href="#activity">Activity</a>
           <a href="#projects">Projects</a>
@@ -32,9 +33,56 @@ const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
     <div class="content">
       <section id="about" class="prose">
         <h2>About</h2>
-        <p>I am a founder in the San Francisco Bay Area. My edge is not any one language or framework. It is that I can take a product from an idea to a real user, alone, by directing a fleet of coding agents and building the guardrails that keep them honest.</p>
-        <p>The proof is <a href="#rowanstead">Rowanstead</a>: a full-stack web and iOS product with a test suite, a deploy pipeline, an outreach machine and an App Store submission, built in five weeks, with more than a thousand commits from one person. The agents typed most of it. I wrote the specs, the reviews, the kill gates and the post-mortem.</p>
-        <p>Before that I built a distressed-credit screener that a fund still uses daily. Right now I am in customer discovery for a tool that reads filings so an analyst does not have to.</p>
+        <p>I am a founder in the San Francisco Bay Area. What I am good at is not a language or a framework. It is building the system that turns an idea into a shipped product when there is one person to do it: the agents, the specs, the review gates, the deploy path, the guardrails, and the habit of writing down what broke.</p>
+        <p>The evidence is <a href="#rowanstead">Rowanstead</a>. Blank repo on July 27, 2026. Web app live on a VPS, an iOS app through Apple's review process, a Playwright suite, an outreach machine and a nightly self-review loop by September 2, with more than a thousand commits. The agents typed most of the code. I built the thing that made them useful, and the story of how that setup evolved is the most honest CV I have.</p>
+        <p>Before that I built a distressed-credit screener that a fund uses daily. Now I am in customer discovery for a tool that reads filings so an analyst does not have to.</p>
+      </section>
+
+      <section id="system">
+        <h2>The system, week by week</h2>
+        <div class="prose"><p>How the setup started, what went wrong, and what each failure turned into. Every rule below exists because of the line above it.</p></div>
+        <ol class="timeline">
+          <li>
+            <div class="when">Week 1 · Jul 27</div>
+            <div><h3>One session, one engineer</h3>
+            <p>Claude Code in a terminal, me reviewing every diff. Next.js and Postgres on a VPS behind Caddy, an Expo app beside it. Fast at first, and every hour of output cost an hour of my attention.</p></div>
+          </li>
+          <li>
+            <div class="when">Week 2 · Aug 10</div>
+            <div><h3>The thesis dies on a call, the repo does not notice</h3>
+            <p>An agency owner told me the compliance record I was building was not her problem. I logged it and kept building on the old plan for three weeks, because every artifact in the repo pointed at the old plan. <span class="lesson">Lesson: a kill gate needs a fast path for "the premise is wrong", separate from "the numbers are bad".</span></p></div>
+          </li>
+          <li>
+            <div class="when">Week 4 · Aug 19</div>
+            <div><h3>Split the work by how much judgment it needs</h3>
+            <p>Tightly specified changes go to a cheaper model through a dispatcher that can run several in parallel. A second model reviews the diff before I see it. First bug found: the reviewer was rubber-stamping. <span class="lesson">Lesson: a reviewer that never rejects is not a reviewer. Log the rejection reasons and read them.</span></p></div>
+          </li>
+          <li>
+            <div class="when">Week 4 · Aug 24 to 26</div>
+            <div><h3>Operations from a phone</h3>
+            <p>A Telegram relay to drive sessions while out, a 07:00 morning brief, a deploy command that arms and then needs a confirm within five minutes, a backup tool that whitelists config into git and scans it for secrets, read-only guards on the agents that only look. <span class="lesson">Lesson: a prompt rule is not a guardrail. Anything that must not happen gets a hook or a permission.</span></p></div>
+          </li>
+          <li>
+            <div class="when">Week 5 · Aug 28</div>
+            <div><h3>The bad day</h3>
+            <p>Three things in one day. An overnight headless run froze on a macOS consent dialog nobody was there to click. Three parallel browser scouts got the LinkedIn account flagged. Two iOS builds were rejected by Apple after the build service reported them finished. <span class="lesson">Lessons: headless work stays out of protected folders; one browser session at a time; "finished" is not "accepted", confirm at the destination.</span></p></div>
+          </li>
+          <li>
+            <div class="when">Week 5 · Aug 30 to 31</div>
+            <div><h3>Multiple sessions on one tree</h3>
+            <p>A commander session, a shared board, numbered rounds, deploy on every even round. Peers on one worktree can move each other's branches, so the protocol is small commits on main, pathspec-only adds, and never assume a message between sessions was delivered. Built and deployed an agency demo flow over the weekend this way.</p></div>
+          </li>
+          <li>
+            <div class="when">Week 6 · Sep 1</div>
+            <div><h3>The loop closes</h3>
+            <p>A nightly retro reads the day's call log and email replies and proposes prompt and rule changes. Proposals still need my yes. Same week: a local search index over 62,000 agent messages, so past decisions are recalled at zero token cost instead of re-derived.</p></div>
+          </li>
+          <li>
+            <div class="when">Week 6 · Sep 2 to 3</div>
+            <div><h3>Ship, then stop</h3>
+            <p>Version 1.0 submitted to Apple. The next day I set the project down: the thesis was right and no buyer had both the pain and a reason to pay. The set-down is a written handoff, every scheduled job accounted for, so it can be picked up or closed without rot. The system outlived the product, which was the point.</p></div>
+          </li>
+        </ol>
       </section>
 
       <section id="rowanstead">
@@ -45,7 +93,7 @@ const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
           <div class="stats">
             <div class="stat"><b>{contrib.total.toLocaleString()}</b><span>commits since first commit, Jul 27</span></div>
             <div class="stat"><b>5 wk</b><span>first commit to App Store review</span></div>
-            <div class="stat"><b>1</b><span>engineer, plus agents</span></div>
+            <div class="stat"><b>1.0</b><span>submitted to Apple, Sep 2</span></div>
           </div>
           <div class="chips">
             <span class="chip">Next.js</span><span class="chip">Postgres · Prisma</span><span class="chip">Expo · iOS</span><span class="chip">Playwright</span><span class="chip">Caddy · VPS</span><span class="chip">Claude Code</span><span class="chip">Hermes</span><span class="chip">Telegram ops</span>

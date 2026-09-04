@@ -88,3 +88,16 @@ section > h2 { font-size: 0.8rem; letter-spacing: 0.16em; text-transform: upperc
 .detail h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
 .detail .meta { font-size: 0.85rem; color: var(--muted); margin-bottom: 2.5rem; }
 footer.site { font-size: 0.85rem; color: var(--muted); max-width: 44rem; margin: 0 auto; padding: 0 1.5rem 3rem; }
+
+/* timeline */
+ol.timeline { list-style: none; padding: 0; margin: 1.5rem 0 0; position: relative; }
+ol.timeline::before { content: ""; position: absolute; left: 0; top: 0.5rem; bottom: 0.5rem; width: 1px; background: var(--rule); }
+@media (min-width: 40rem) { ol.timeline::before { left: 7.5rem; } }
+ol.timeline li { display: grid; grid-template-columns: 1fr; gap: 0.25rem 1.5rem; padding: 0 0 2rem 1.5rem; position: relative; }
+@media (min-width: 40rem) { ol.timeline li { grid-template-columns: 6rem 1fr; padding-left: 0; } }
+ol.timeline li::before { content: ""; position: absolute; left: -4px; top: 0.45rem; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
+@media (min-width: 40rem) { ol.timeline li::before { left: calc(7.5rem - 4px); } }
+ol.timeline .when { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding-top: 0.2rem; }
+ol.timeline h3 { font-size: 1.05rem; }
+ol.timeline p { margin: 0.4rem 0 0; font-size: 0.95rem; max-width: 60ch; }
+.lesson { color: var(--fg); }
