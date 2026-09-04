@@ -1,0 +1,30 @@
+---
+import '../styles/global.css';
+const { title, description = 'Georgiy Shostakovich. Projects, post-mortems and notes.' } = Astro.props;
+const pageTitle = title ? `${title} · Georgiy Shostakovich` : 'Georgiy Shostakovich';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="alternate" type="application/rss+xml" title="Writing" href="/rss.xml" />
+  </head>
+  <body>
+    <header class="site">
+      <a href="/"><strong>Georgiy Shostakovich</strong></a>
+      <nav>
+        <a href="/projects/">Projects</a>
+        <a href="/writing/">Writing</a>
+        <a href="/about/">About</a>
+      </nav>
+    </header>
+    <main><slot /></main>
+    <footer class="site">
+      <a href="mailto:georgeshostakovich@gmail.com">georgeshostakovich@gmail.com</a>
+      &nbsp;·&nbsp; <a href="/rss.xml">RSS</a>
+    </footer>
+  </body>
+</html>

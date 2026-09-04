@@ -1,0 +1,47 @@
+:root {
+  --bg: #fdfdfb;
+  --fg: #1a1a1a;
+  --muted: #6b6b6b;
+  --rule: #e4e4df;
+  --link: #1a1a1a;
+  --maxw: 40rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #131312; --fg: #e8e6e0; --muted: #9a9890; --rule: #2a2a27; --link: #e8e6e0; }
+}
+* { box-sizing: border-box; }
+html { font-size: 17px; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: Georgia, 'Iowan Old Style', 'Palatino Linotype', serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+main { max-width: var(--maxw); margin: 0 auto; padding: 3rem 1.25rem 5rem; }
+header.site { max-width: var(--maxw); margin: 0 auto; padding: 1.5rem 1.25rem 0; display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+header.site a { text-decoration: none; }
+header.site nav a { margin-left: 1.25rem; color: var(--muted); }
+header.site nav a:hover { color: var(--fg); }
+h1 { font-size: 1.9rem; font-weight: 500; line-height: 1.2; margin: 0 0 1rem; letter-spacing: -0.01em; }
+h2 { font-size: 1.25rem; font-weight: 500; margin: 2.5rem 0 0.75rem; }
+h3 { font-size: 1.05rem; font-weight: 600; margin: 1.75rem 0 0.5rem; }
+p, li { max-width: 65ch; }
+a { color: var(--link); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; }
+a:hover { text-decoration-color: var(--fg); }
+.muted { color: var(--muted); }
+.meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; }
+ul.list { list-style: none; padding: 0; margin: 0; }
+ul.list li { padding: 1rem 0; border-top: 1px solid var(--rule); }
+ul.list li:last-child { border-bottom: 1px solid var(--rule); }
+ul.list .title { display: block; font-size: 1.1rem; }
+ul.list .sub { color: var(--muted); font-size: 0.95rem; margin-top: 0.15rem; }
+blockquote { margin: 1.5rem 0; padding-left: 1rem; border-left: 2px solid var(--rule); color: var(--muted); }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.88em; background: var(--rule); padding: 0.1em 0.3em; border-radius: 3px; }
+pre { overflow-x: auto; padding: 1rem; background: var(--rule); border-radius: 4px; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+td, th { text-align: left; padding: 0.5rem 0.75rem 0.5rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+footer.site { max-width: var(--maxw); margin: 0 auto; padding: 0 1.25rem 3rem; color: var(--muted); font-size: 0.9rem; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5rem 0; }

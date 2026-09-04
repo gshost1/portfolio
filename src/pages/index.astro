@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const posts = (await getCollection('writing')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 5);
+---
+<Base>
+  <h1>I build small software for people who read too many documents.</h1>
+  <p>
+    Founder, Bay Area. Right now I am building a tool that reads SEC filings and credit
+    documents so an analyst does not have to. Before that I spent a year on eldercare
+    coordination software, shipped it to the App Store, and set it down when no buyer had both
+    the pain and a reason to pay. The post-mortem is below.
+  </p>
+  <p>
+    Most of my work runs on a stack of coding agents I have wired together myself, and I write
+    about what breaks.
+  </p>
+
+  <h2>Projects</h2>
+  <ul class="list">
+    {projects.map((p) => (
+      <li>
+        <a class="title" href={`/projects/${p.id}/`}>{p.data.title}</a>
+        <div class="sub">{p.data.summary} <span class="muted">· {p.data.status}</span></div>
+      </li>
+    ))}
+  </ul>
+
+  <h2>Writing</h2>
+  <ul class="list">
+    {posts.map((w) => (
+      <li>
+        <a class="title" href={`/writing/${w.id}/`}>{w.data.title}</a>
+        <div class="sub">{w.data.summary}</div>
+      </li>
+    ))}
+  </ul>
+</Base>
