@@ -4,6 +4,7 @@ summary: The multi-agent coding and operations setup one person uses to work lik
 period: "2026"
 status: in use
 order: 4
+stack: ["Claude Code", "Hermes", "Telegram", "launchd", "Pi"]
 ---
 
 ## The setup

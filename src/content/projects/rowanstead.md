@@ -4,6 +4,7 @@ summary: Coordination app for families caring for a parent from far away. Shippe
 period: 2025 to September 2026
 status: set down, post-mortem
 order: 2
+stack: ["Next.js", "Postgres", "Expo", "Playwright", "Claude Code", "Hermes"]
 ---
 
 ## What it was

@@ -4,6 +4,7 @@ summary: A tool that reads SEC filings and credit documents so an analyst does n
 period: September 2026 to now
 status: in test
 order: 1
+stack: ["Python", "LLM extraction", "SEC EDGAR"]
 ---
 
 ## The bet

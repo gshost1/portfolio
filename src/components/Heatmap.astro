@@ -1,0 +1,19 @@
+---
+import data from '../data/contributions.json';
+const days = data.days;
+const level = (n) => (n === 0 ? '' : n < 5 ? 'l1' : n < 15 ? 'l2' : n < 40 ? 'l3' : 'l4');
+const firstDow = new Date(days[0].date + 'T00:00:00Z').getUTCDay();
+const pad = Array.from({ length: firstDow });
+const busiest = days.reduce((a, b) => (b.contributionCount > a.contributionCount ? b : a));
+const fmt = (s) => new Date(s + 'T00:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+---
+<div class="heat">
+  <div class="grid">
+    {pad.map(() => <div style="width:18px;height:18px"></div>)}
+    {days.map((d) => <div class={`d ${level(d.contributionCount)}`} title={`${d.contributionCount} on ${d.date}`}></div>)}
+  </div>
+  <div class="legend">
+    <span>{fmt(days[0].date)} to {fmt(days[days.length - 1].date)} · busiest day {fmt(busiest.date)}, {busiest.contributionCount} commits</span>
+    <span>Less <span class="sw"><i class="d"></i><i class="d l1"></i><i class="d l2"></i><i class="d l3"></i><i class="d l4"></i></span> More</span>
+  </div>
+</div>

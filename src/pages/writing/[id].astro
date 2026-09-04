@@ -10,7 +10,11 @@ const { Content } = await render(w);
 const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 <Base title={w.data.title} description={w.data.summary}>
-  <h1>{w.data.title}</h1>
-  <div class="meta">{fmt(w.data.date)}</div>
-  <Content />
+  <article class="detail">
+    <a class="back" href="/#writing">← Georgiy Shostakovich</a>
+    <h1>{w.data.title}</h1>
+    <div class="meta">{fmt(w.data.date)}</div>
+    <div class="prose"><Content /></div>
+  </article>
+  <footer class="site"><a href="mailto:georgeshostakovich@gmail.com">georgeshostakovich@gmail.com</a></footer>
 </Base>

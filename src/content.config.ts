@@ -9,6 +9,7 @@ const projects = defineCollection({
     period: z.string(),
     status: z.string(),
     order: z.number(),
+    stack: z.array(z.string()).optional(),
   }),
 });
 

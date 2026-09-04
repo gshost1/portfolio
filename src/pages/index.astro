@@ -1,39 +1,101 @@
 ---
 import Base from '../layouts/Base.astro';
+import Heatmap from '../components/Heatmap.astro';
+import contrib from '../data/contributions.json';
 import { getCollection } from 'astro:content';
-const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
-const posts = (await getCollection('writing')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 5);
+const projects = (await getCollection('projects')).filter((p) => p.id !== 'rowanstead').sort((a, b) => a.data.order - b.data.order);
+const posts = (await getCollection('writing')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 ---
 <Base>
-  <h1>I build small software for people who read too many documents.</h1>
-  <p>
-    Founder, Bay Area. Right now I am building a tool that reads SEC filings and credit
-    documents so an analyst does not have to. Before that I spent a year on eldercare
-    coordination software, shipped it to the App Store, and set it down when no buyer had both
-    the pain and a reason to pay. The post-mortem is below.
-  </p>
-  <p>
-    Most of my work runs on a stack of coding agents I have wired together myself, and I write
-    about what breaks.
-  </p>
+  <div class="wrap shell">
+    <aside class="side">
+      <div>
+        <h1><a href="/">Georgiy Shostakovich</a></h1>
+        <div class="role">Founder. I ship products alone by running a team of coding agents.</div>
+        <p class="tag">Built and shipped Rowanstead, an eldercare coordination app, from first commit to App Store review in five weeks. Now building tools that read financial filings.</p>
+        <nav class="secnav">
+          <a href="#about">About</a>
+          <a href="#rowanstead">Rowanstead</a>
+          <a href="#activity">Activity</a>
+          <a href="#projects">Projects</a>
+          <a href="#writing">Writing</a>
+        </nav>
+      </div>
+      <div class="links">
+        <a href="https://github.com/gshost1">GitHub</a>
+        <a href="mailto:georgeshostakovich@gmail.com">Email</a>
+        <a href="/rss.xml">RSS</a>
+      </div>
+    </aside>
 
-  <h2>Projects</h2>
-  <ul class="list">
-    {projects.map((p) => (
-      <li>
-        <a class="title" href={`/projects/${p.id}/`}>{p.data.title}</a>
-        <div class="sub">{p.data.summary} <span class="muted">· {p.data.status}</span></div>
-      </li>
-    ))}
-  </ul>
+    <div class="content">
+      <section id="about" class="prose">
+        <h2>About</h2>
+        <p>I am a founder in the San Francisco Bay Area. My edge is not any one language or framework. It is that I can take a product from an idea to a real user, alone, by directing a fleet of coding agents and building the guardrails that keep them honest.</p>
+        <p>The proof is <a href="#rowanstead">Rowanstead</a>: a full-stack web and iOS product with a test suite, a deploy pipeline, an outreach machine and an App Store submission, built in five weeks, with more than a thousand commits from one person. The agents typed most of it. I wrote the specs, the reviews, the kill gates and the post-mortem.</p>
+        <p>Before that I built a distressed-credit screener that a fund still uses daily. Right now I am in customer discovery for a tool that reads filings so an analyst does not have to.</p>
+      </section>
 
-  <h2>Writing</h2>
-  <ul class="list">
-    {posts.map((w) => (
-      <li>
-        <a class="title" href={`/writing/${w.id}/`}>{w.data.title}</a>
-        <div class="sub">{w.data.summary}</div>
-      </li>
-    ))}
-  </ul>
+      <section id="rowanstead">
+        <h2>Rowanstead</h2>
+        <div class="featured">
+          <h3>Eldercare coordination for the family member who is far away</h3>
+          <p>Web app, iOS app, agency-facing demo, voice notes, a digest, and the outreach and operations machine around it. Solo, unfunded, submitted to Apple on September 2, 2026.</p>
+          <div class="stats">
+            <div class="stat"><b>{contrib.total.toLocaleString()}</b><span>commits since first commit, Jul 27</span></div>
+            <div class="stat"><b>5 wk</b><span>first commit to App Store review</span></div>
+            <div class="stat"><b>1</b><span>engineer, plus agents</span></div>
+          </div>
+          <div class="chips">
+            <span class="chip">Next.js</span><span class="chip">Postgres · Prisma</span><span class="chip">Expo · iOS</span><span class="chip">Playwright</span><span class="chip">Caddy · VPS</span><span class="chip">Claude Code</span><span class="chip">Hermes</span><span class="chip">Telegram ops</span>
+          </div>
+          <a class="more" href="/projects/rowanstead/">Read the full build story and post-mortem →</a>
+        </div>
+        <div class="prose">
+          <h3>The setup that built it</h3>
+          <p>One main Claude Code session as the lead engineer. A cheaper model for tightly specified code changes, dispatched in parallel. A review model gating every diff. A Telegram relay so the whole thing could be driven from a phone. Cron-scheduled agents for research, briefings and a nightly retro that read the day's logs and proposed rule changes. A backup tool that keeps the config in git and the secrets out of it.</p>
+          <p>Every guardrail on that list exists because something broke: a headless run stalled on a consent dialog, a build system said "finished" while Apple was rejecting the binary, three parallel scouts got an account flagged. The rules are written down in <a href="/projects/agent-harness/">Agent harness</a>.</p>
+        </div>
+      </section>
+
+      <section id="activity">
+        <h2>Activity</h2>
+        <Heatmap />
+        <p class="prose" style="margin-top:1rem;font-size:0.95rem">GitHub contributions from the first Rowanstead commit onward, across Rowanstead, the agent harness, the asymmetry screener and Keysreallysafe. Most repos are private, so this is pulled from the GitHub API at build time rather than the public profile.</p>
+      </section>
+
+      <section id="projects">
+        <h2>Projects</h2>
+        {projects.map((p) => (
+          <a class="card" href={`/projects/${p.id}/`}>
+            <div class="when">{p.data.period}</div>
+            <div>
+              <h3>{p.data.title}</h3>
+              <p>{p.data.summary}</p>
+              <div class="chips">{p.data.stack?.map((s) => <span class="chip">{s}</span>)}</div>
+            </div>
+          </a>
+        ))}
+      </section>
+
+      <section id="writing">
+        <h2>Writing</h2>
+        {posts.map((w) => (
+          <a class="card" href={`/writing/${w.id}/`}>
+            <div class="when">{fmt(w.data.date)}</div>
+            <div><h3>{w.data.title}</h3><p>{w.data.summary}</p></div>
+          </a>
+        ))}
+      </section>
+    </div>
+  </div>
+  <script>
+    const links = [...document.querySelectorAll('nav.secnav a')];
+    const secs = links.map((a) => document.querySelector(a.getAttribute('href')));
+    const io = new IntersectionObserver((es) => {
+      es.forEach((e) => { if (e.isIntersecting) { links.forEach((l) => l.classList.toggle('on', l.getAttribute('href') === '#' + e.target.id)); } });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    secs.forEach((s) => s && io.observe(s));
+  </script>
 </Base>

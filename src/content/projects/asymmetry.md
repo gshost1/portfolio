@@ -4,6 +4,7 @@ summary: Research tool for levered small-caps, built on the SEC bulk XBRL archiv
 period: 2025 to now
 status: in use
 order: 3
+stack: ["Python", "XBRL", "SEC EDGAR"]
 ---
 
 ## What it does

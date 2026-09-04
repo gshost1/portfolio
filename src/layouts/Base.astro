@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-const { title, description = 'Georgiy Shostakovich. Projects, post-mortems and notes.' } = Astro.props;
+const { title, description = 'Georgiy Shostakovich. Founder. Built and shipped Rowanstead solo through a fleet of coding agents.' } = Astro.props;
 const pageTitle = title ? `${title} · Georgiy Shostakovich` : 'Georgiy Shostakovich';
 ---
 <!doctype html>
@@ -10,21 +10,12 @@ const pageTitle = title ? `${title} · Georgiy Shostakovich` : 'Georgiy Shostako
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    <meta name="color-scheme" content="dark" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="alternate" type="application/rss+xml" title="Writing" href="/rss.xml" />
   </head>
   <body>
-    <header class="site">
-      <a href="/"><strong>Georgiy Shostakovich</strong></a>
-      <nav>
-        <a href="/projects/">Projects</a>
-        <a href="/writing/">Writing</a>
-        <a href="/about/">About</a>
-      </nav>
-    </header>
-    <main><slot /></main>
-    <footer class="site">
-      <a href="mailto:georgeshostakovich@gmail.com">georgeshostakovich@gmail.com</a>
-      &nbsp;·&nbsp; <a href="/rss.xml">RSS</a>
-    </footer>
+    <slot />
   </body>
 </html>
