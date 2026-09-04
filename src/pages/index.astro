@@ -18,7 +18,8 @@ const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
     </div>
 
     <section id="work">
-      <h2>Work</h2>
+      <h2>Work<small>One flagship, four tools around it, and the commit record behind them.</small></h2>
+      <div class="body">
       <div class="featured">
         <h3>Rowanstead</h3>
         <p>Eldercare coordination for the family member who is far away. Web app, iOS app, agency demo, voice notes, digest, and the outreach and operations machine around it. Solo and unfunded.</p>
@@ -32,22 +33,23 @@ const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
         </div>
         <p style="margin-top:1rem"><a class="more" href="/projects/rowanstead/">Build story and post-mortem</a></p>
       </div>
+      <div class="grid2">
       {projects.map((p) => (
-        <a class="row" href={`/projects/${p.id}/`}>
+        <a class="pcard" href={`/projects/${p.id}/`}>
           <div class="when">{p.data.period}</div>
-          <div>
-            <h3>{p.data.title} <span class="arr">→</span></h3>
-            <p>{p.data.summary}</p>
-            <div class="chips">{p.data.stack?.map((s) => <span class="chip">{s}</span>)}</div>
-          </div>
+          <h3>{p.data.title} <span class="arr">→</span></h3>
+          <p>{p.data.summary}</p>
+          <div class="chips">{p.data.stack?.map((s) => <span class="chip">{s}</span>)}</div>
         </a>
       ))}
+      </div>
       <div style="margin-top:2rem"><Heatmap /></div>
+      </div>
     </section>
 
     <section id="system">
-      <h2>The system, week by week</h2>
-      <div class="prose" style="margin-bottom:1.5rem"><p>How the setup started, what went wrong, and what each failure turned into. Every rule below exists because of the line above it.</p></div>
+      <h2>The system<small>Week by week: how the setup started, what went wrong, and what each failure turned into.</small></h2>
+      <div class="body">
       <ol class="timeline">
         <li><div class="when">Week 1<br/>Jul 27</div><div><h3>One session, one engineer</h3><p>Claude Code in a terminal, me reviewing every diff. Next.js and Postgres on a VPS behind Caddy, an Expo app beside it. Fast at first, and every hour of output cost an hour of my attention.</p></div></li>
         <li><div class="when">Week 2<br/>Aug 10</div><div><h3>The thesis dies on a call, the repo does not notice</h3><p>An agency owner told me the compliance record I was building was not her problem. I logged it and kept building on the old plan for three weeks, because every artifact in the repo pointed at the old plan. <span class="lesson">Lesson: a kill gate needs a fast path for "the premise is wrong", separate from "the numbers are bad".</span></p></div></li>
@@ -58,29 +60,36 @@ const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
         <li><div class="when">Week 6<br/>Sep 1</div><div><h3>The loop closes</h3><p>A nightly retro reads the day's call log and email replies and proposes prompt and rule changes. Proposals still need my yes. Same week: a local search index over 62,000 agent messages, so past decisions are recalled at zero token cost instead of re-derived.</p></div></li>
         <li><div class="when">Week 6<br/>Sep 2 to 3</div><div><h3>Ship, then stop</h3><p>Version 1.0 submitted to Apple. The next day I set the project down: the thesis was right and no buyer had both the pain and a reason to pay. The set-down is a written handoff with every scheduled job accounted for, so it can be picked up or closed without rot. The system outlived the product, which was the point.</p></div></li>
       </ol>
+      </div>
     </section>
 
     <section id="writing">
-      <h2>Writing</h2>
+      <h2>Writing<small>Notes on shipping alone and what it costs.</small></h2>
+      <div class="body">
       {posts.map((w) => (
         <a class="row" href={`/writing/${w.id}/`}>
           <div class="when">{fmt(w.data.date)}</div>
           <div><h3>{w.data.title} <span class="arr">→</span></h3><p>{w.data.summary}</p></div>
         </a>
       ))}
+      </div>
     </section>
 
-    <section id="about" class="prose">
+    <section id="about">
       <h2>About</h2>
+      <div class="body prose">
       <p>I am a founder in the San Francisco Bay Area. What I am good at is not a language or a framework. It is building the system that turns an idea into a shipped product when there is one person to do it: the agents, the specs, the review gates, the deploy path, the guardrails, and the habit of writing down what broke.</p>
       <p>The agents typed most of the code on this site's projects. I built the thing that made them useful, and the week-by-week story above is the most honest CV I have.</p>
       <p>Before Rowanstead I built a distressed-credit screener that a fund uses daily. Now I am in customer discovery for a tool that reads filings so an analyst does not have to.</p>
+      </div>
     </section>
 
-    <section id="contact" class="prose">
+    <section id="contact">
       <h2>Contact</h2>
+      <div class="body prose">
       <p>Email is best: <a href="mailto:georgeshostakovich@gmail.com">georgeshostakovich@gmail.com</a>. I answer investors, founders building with agents, and anyone who reads filings for a living.</p>
       <Icons />
+      </div>
     </section>
   </main>
   <script>
