@@ -46,7 +46,7 @@ import snapshot from '../data/contributions.json';
       const c = document.createElement('div');
       c.className = 'd ' + level(d.count);
       c.title = `${d.count} on ${d.date}`;
-      c.style.animationDelay = i * 4 + 'ms';
+      c.style.animationDelay = Math.min(i * 12, 600) + 'ms';
       c.onmouseenter = () => { detail.textContent = `${d.count} contribution${d.count === 1 ? '' : 's'} · ${fmt(d.date)}`; };
       c.onclick = () => { grid.querySelectorAll('.sel').forEach((x) => x.classList.remove('sel')); c.classList.add('sel'); detail.textContent = `${d.count} contribution${d.count === 1 ? '' : 's'} · ${fmt(d.date)}`; };
       grid.appendChild(c);

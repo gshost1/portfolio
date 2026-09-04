@@ -11,7 +11,10 @@ const pageTitle = title ? `${title} · George Shostakovych` : 'George Shostakovy
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
-    <meta name="color-scheme" content="dark" />
+    <meta name="color-scheme" content="dark light" />
+    <script is:inline>
+      (function(){try{var t=localStorage.getItem('theme');if(!t){t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'}document.documentElement.dataset.theme=t}catch(e){}})();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="alternate" type="application/rss+xml" title="Writing" href="/rss.xml" />
@@ -19,6 +22,41 @@ const pageTitle = title ? `${title} · George Shostakovych` : 'George Shostakovy
   <body>
     <Nav home={home} />
     <slot />
+    <script>
+      // theme toggle
+      const tb = document.getElementById('theme');
+      tb?.addEventListener('click', () => {
+        const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+        document.documentElement.dataset.theme = next;
+        try { localStorage.setItem('theme', next); } catch {}
+      });
+      // scroll reveal
+      const rv = document.querySelectorAll('section, .pcard, .featured, .heat, ol.timeline li, .row');
+      rv.forEach((el, i) => { el.classList.add('reveal'); el.style.transitionDelay = `${(i % 6) * 60}ms`; });
+      const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+      rv.forEach((el) => io.observe(el));
+      // cursor spotlight on cards
+      document.querySelectorAll('.pcard, .featured, .heat').forEach((c) => {
+        c.classList.add('spot');
+        c.addEventListener('pointermove', (e) => { const r = c.getBoundingClientRect(); c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px'); });
+      });
+      // magnetic icons
+      document.querySelectorAll('.icons a').forEach((a) => {
+        a.addEventListener('pointermove', (e) => { const r = a.getBoundingClientRect(); a.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.25}px, ${(e.clientY - r.top - r.height / 2) * 0.25}px)`; });
+        a.addEventListener('pointerleave', () => { a.style.transform = ''; });
+      });
+      // count-up numbers
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const cu = new IntersectionObserver((es) => es.forEach((e) => {
+        if (!e.isIntersecting) return; cu.unobserve(e.target);
+        const el = e.target, raw = el.textContent.trim(), m = raw.match(/^([\d,]+(?:\.\d+)?)(.*)$/);
+        if (!m || reduce) return;
+        const target = parseFloat(m[1].replace(/,/g, '')), dec = (m[1].split('.')[1] || '').length, suffix = m[2], t0 = performance.now(), D = 1100;
+        const step = (t) => { const k = Math.min(1, (t - t0) / D), v = target * (1 - Math.pow(1 - k, 3)); el.textContent = (dec ? v.toFixed(dec) : Math.round(v).toLocaleString()) + suffix; if (k < 1) requestAnimationFrame(step); };
+        requestAnimationFrame(step);
+      }), { threshold: 0.6 });
+      document.querySelectorAll('.stat b, .kpi b').forEach((b) => cu.observe(b));
+    </script>
     <footer class="site" id="contact-footer">
       <span>© 2026 George Shostakovych</span>
       <span><a href="/rss.xml">RSS</a> · <a href="https://github.com/gshost1">GitHub</a> · <a href="https://x.com/gshost2">X</a> · <a href="https://www.linkedin.com/in/gshost1/">LinkedIn</a></span>
