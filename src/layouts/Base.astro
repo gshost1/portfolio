@@ -1,7 +1,8 @@
 ---
 import '../styles/global.css';
-const { title, description = 'Georgiy Shostakovich. Founder. Built and shipped Rowanstead solo through a fleet of coding agents.' } = Astro.props;
-const pageTitle = title ? `${title} · Georgiy Shostakovich` : 'Georgiy Shostakovich';
+import Nav from '../components/Nav.astro';
+const { title, description = 'George Shostakovych. Founder. I build the system that ships the product.', home = false } = Astro.props;
+const pageTitle = title ? `${title} · George Shostakovych` : 'George Shostakovych';
 ---
 <!doctype html>
 <html lang="en">
@@ -12,10 +13,15 @@ const pageTitle = title ? `${title} · Georgiy Shostakovich` : 'Georgiy Shostako
     <meta name="description" content={description} />
     <meta name="color-scheme" content="dark" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="alternate" type="application/rss+xml" title="Writing" href="/rss.xml" />
   </head>
   <body>
+    <Nav home={home} />
     <slot />
+    <footer class="site" id="contact-footer">
+      <span>© 2026 George Shostakovych</span>
+      <span><a href="/rss.xml">RSS</a> · <a href="https://github.com/gshost1">GitHub</a> · <a href="https://x.com/gshost2">X</a> · <a href="https://www.linkedin.com/in/gshost1/">LinkedIn</a></span>
+    </footer>
   </body>
 </html>

@@ -1,0 +1,17 @@
+---
+const { home = false } = Astro.props;
+const h = (x) => (home ? x : '/' + x);
+---
+<header class="nav" id="nav">
+  <div class="in">
+    <a class="brand" href="/">George Shostakovych</a>
+    <button class="burger" aria-label="Menu" onclick="document.getElementById('nav').classList.toggle('open')">Menu</button>
+    <ul>
+      <li><a href={h('#work')}>Work</a></li>
+      <li><a href={h('#system')}>System</a></li>
+      <li><a href={h('#writing')}>Writing</a></li>
+      <li><a href={h('#about')}>About</a></li>
+      <li><a href={h('#contact')}>Contact</a></li>
+    </ul>
+  </div>
+</header>

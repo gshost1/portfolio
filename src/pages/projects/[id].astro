@@ -9,12 +9,11 @@ const { p } = Astro.props;
 const { Content } = await render(p);
 ---
 <Base title={p.data.title} description={p.data.summary}>
-  <article class="detail">
-    <a class="back" href="/#projects">← Georgiy Shostakovich</a>
+  <main class="detail">
+    <a class="back" href="/#work">← Work</a>
     <h1>{p.data.title}</h1>
     <div class="meta">{p.data.period} · {p.data.status}</div>
-    <div class="chips" style="margin-bottom:2rem">{p.data.stack?.map((s) => <span class="chip">{s}</span>)}</div>
+    <div class="chips" style="margin-bottom:2.5rem">{p.data.stack?.map((s) => <span class="chip">{s}</span>)}</div>
     <div class="prose"><Content /></div>
-  </article>
-  <footer class="site"><a href="mailto:georgeshostakovich@gmail.com">georgeshostakovich@gmail.com</a></footer>
+  </main>
 </Base>

@@ -1,19 +1,74 @@
 ---
-import data from '../data/contributions.json';
-const days = data.days;
-const level = (n) => (n === 0 ? '' : n < 5 ? 'l1' : n < 15 ? 'l2' : n < 40 ? 'l3' : 'l4');
-const firstDow = new Date(days[0].date + 'T00:00:00Z').getUTCDay();
-const pad = Array.from({ length: firstDow });
-const busiest = days.reduce((a, b) => (b.contributionCount > a.contributionCount ? b : a));
-const fmt = (s) => new Date(s + 'T00:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+import snapshot from '../data/contributions.json';
 ---
-<div class="heat">
-  <div class="grid">
-    {pad.map(() => <div style="width:18px;height:18px"></div>)}
-    {days.map((d) => <div class={`d ${level(d.contributionCount)}`} title={`${d.contributionCount} on ${d.date}`}></div>)}
+<div class="heat" id="heat" data-snapshot={JSON.stringify(snapshot.days)}>
+  <div class="top">
+    <div class="total"><span id="h-total">{snapshot.total.toLocaleString()}</span><small id="h-label">contributions since Jul 27, 2026</small></div>
+    <div class="status"><span class="dot" id="h-dot"></span><span id="h-status">snapshot</span></div>
   </div>
-  <div class="legend">
-    <span>{fmt(days[0].date)} to {fmt(days[days.length - 1].date)} · busiest day {fmt(busiest.date)}, {busiest.contributionCount} commits</span>
-    <span>Less <span class="sw"><i class="d"></i><i class="d l1"></i><i class="d l2"></i><i class="d l3"></i><i class="d l4"></i></span> More</span>
+  <div class="scroll"><div class="grid" id="h-grid"></div></div>
+  <div class="bottom">
+    <span class="detail" id="h-detail">Hover a day</span>
+    <span class="range" id="h-range"><button data-r="rowanstead" class="on">Since Rowanstead</button><button data-r="90">90 days</button><button data-r="year">Year</button></span>
+    <span>Less<span class="sw"><i></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i></span>More</span>
   </div>
 </div>
+<script>
+  const START = '2026-07-27';
+  const el = document.getElementById('heat');
+  const grid = document.getElementById('h-grid');
+  const detail = document.getElementById('h-detail');
+  let all = JSON.parse(el.dataset.snapshot).map((d) => ({ date: d.date, count: d.contributionCount }));
+  let range = 'rowanstead';
+  const fmt = (s) => new Date(s + 'T00:00:00Z').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+  const level = (n) => (n === 0 ? '' : n < 5 ? 'l1' : n < 15 ? 'l2' : n < 40 ? 'l3' : 'l4');
+  function slice() {
+    const today = new Date().toISOString().slice(0, 10);
+    let from = START;
+    if (range === '90') from = new Date(Date.now() - 89 * 864e5).toISOString().slice(0, 10);
+    if (range === 'year') from = new Date(Date.now() - 364 * 864e5).toISOString().slice(0, 10);
+    return all.filter((d) => d.date >= from && d.date <= today);
+  }
+  function render() {
+    const days = slice();
+    grid.innerHTML = '';
+    const pad = new Date(days[0].date + 'T00:00:00Z').getUTCDay();
+    for (let i = 0; i < pad; i++) grid.appendChild(Object.assign(document.createElement('div'), { style: 'width:13px;height:13px' }));
+    days.forEach((d, i) => {
+      const c = document.createElement('div');
+      c.className = 'd ' + level(d.count);
+      c.title = `${d.count} on ${d.date}`;
+      c.style.animationDelay = i * 4 + 'ms';
+      c.onmouseenter = () => { detail.textContent = `${d.count} contribution${d.count === 1 ? '' : 's'} · ${fmt(d.date)}`; };
+      c.onclick = () => { grid.querySelectorAll('.sel').forEach((x) => x.classList.remove('sel')); c.classList.add('sel'); detail.textContent = `${d.count} contribution${d.count === 1 ? '' : 's'} · ${fmt(d.date)}`; };
+      grid.appendChild(c);
+    });
+    const total = days.reduce((a, b) => a + b.count, 0);
+    const busiest = days.reduce((a, b) => (b.count > a.count ? b : a));
+    document.getElementById('h-total').textContent = total.toLocaleString();
+    document.getElementById('h-label').textContent = range === 'rowanstead' ? 'contributions since the first Rowanstead commit' : range === '90' ? 'contributions in the last 90 days' : 'contributions in the last year';
+    grid.onmouseleave = () => { detail.textContent = `Busiest day ${fmt(busiest.date).replace(/, \d{4}$/, '')}, ${busiest.count} contributions`; };
+    grid.onmouseleave();
+    grid.scrollIntoView?.({ inline: 'end', block: 'nearest' });
+  }
+  document.getElementById('h-range').onclick = (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    range = b.dataset.r; document.querySelectorAll('#h-range button').forEach((x) => x.classList.toggle('on', x === b)); render();
+  };
+  render();
+  async function live() {
+    try {
+      const y = new Date().getFullYear();
+      const rs = await Promise.all([y - 1, y].map((yy) => fetch(`https://github-contributions-api.jogruber.de/v4/gshost1?y=${yy}`).then((r) => r.json())));
+      const merged = rs.flatMap((r) => r.contributions).map((d) => ({ date: d.date, count: d.count }));
+      if (merged.length) {
+        all = merged.sort((a, b) => a.date.localeCompare(b.date));
+        render();
+        document.getElementById('h-dot').classList.add('live');
+        document.getElementById('h-status').textContent = 'live from GitHub';
+      }
+    } catch (e) { document.getElementById('h-status').textContent = 'snapshot (GitHub unreachable)'; }
+  }
+  live();
+  setInterval(live, 10 * 60 * 1000);
+</script>

@@ -1,149 +1,95 @@
 ---
 import Base from '../layouts/Base.astro';
 import Heatmap from '../components/Heatmap.astro';
+import Icons from '../components/Icons.astro';
 import contrib from '../data/contributions.json';
 import { getCollection } from 'astro:content';
 const projects = (await getCollection('projects')).filter((p) => p.id !== 'rowanstead').sort((a, b) => a.data.order - b.data.order);
 const posts = (await getCollection('writing')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 ---
-<Base>
-  <div class="wrap shell">
-    <aside class="side">
-      <div>
-        <h1><a href="/">Georgiy Shostakovich</a></h1>
-        <div class="role">I build the system that ships the product.</div>
-        <p class="tag">Solo founder. In five weeks I went from a blank repo to an iOS app in App Store review, by building and rebuilding the agent setup around it every time it broke.</p>
-        <nav class="secnav">
-          <a href="#about">About</a>
-          <a href="#system">The system</a>
-          <a href="#rowanstead">Rowanstead</a>
-          <a href="#activity">Activity</a>
-          <a href="#projects">Projects</a>
-          <a href="#writing">Writing</a>
-        </nav>
-      </div>
-      <div class="links">
-        <a href="https://github.com/gshost1">GitHub</a>
-        <a href="mailto:georgeshostakovich@gmail.com">Email</a>
-        <a href="/rss.xml">RSS</a>
-      </div>
-    </aside>
-
-    <div class="content">
-      <section id="about" class="prose">
-        <h2>About</h2>
-        <p>I am a founder in the San Francisco Bay Area. What I am good at is not a language or a framework. It is building the system that turns an idea into a shipped product when there is one person to do it: the agents, the specs, the review gates, the deploy path, the guardrails, and the habit of writing down what broke.</p>
-        <p>The evidence is <a href="#rowanstead">Rowanstead</a>. Blank repo on July 27, 2026. Web app live on a VPS, an iOS app through Apple's review process, a Playwright suite, an outreach machine and a nightly self-review loop by September 2, with more than a thousand commits. The agents typed most of the code. I built the thing that made them useful, and the story of how that setup evolved is the most honest CV I have.</p>
-        <p>Before that I built a distressed-credit screener that a fund uses daily. Now I am in customer discovery for a tool that reads filings so an analyst does not have to.</p>
-      </section>
-
-      <section id="system">
-        <h2>The system, week by week</h2>
-        <div class="prose"><p>How the setup started, what went wrong, and what each failure turned into. Every rule below exists because of the line above it.</p></div>
-        <ol class="timeline">
-          <li>
-            <div class="when">Week 1 · Jul 27</div>
-            <div><h3>One session, one engineer</h3>
-            <p>Claude Code in a terminal, me reviewing every diff. Next.js and Postgres on a VPS behind Caddy, an Expo app beside it. Fast at first, and every hour of output cost an hour of my attention.</p></div>
-          </li>
-          <li>
-            <div class="when">Week 2 · Aug 10</div>
-            <div><h3>The thesis dies on a call, the repo does not notice</h3>
-            <p>An agency owner told me the compliance record I was building was not her problem. I logged it and kept building on the old plan for three weeks, because every artifact in the repo pointed at the old plan. <span class="lesson">Lesson: a kill gate needs a fast path for "the premise is wrong", separate from "the numbers are bad".</span></p></div>
-          </li>
-          <li>
-            <div class="when">Week 4 · Aug 19</div>
-            <div><h3>Split the work by how much judgment it needs</h3>
-            <p>Tightly specified changes go to a cheaper model through a dispatcher that can run several in parallel. A second model reviews the diff before I see it. First bug found: the reviewer was rubber-stamping. <span class="lesson">Lesson: a reviewer that never rejects is not a reviewer. Log the rejection reasons and read them.</span></p></div>
-          </li>
-          <li>
-            <div class="when">Week 4 · Aug 24 to 26</div>
-            <div><h3>Operations from a phone</h3>
-            <p>A Telegram relay to drive sessions while out, a 07:00 morning brief, a deploy command that arms and then needs a confirm within five minutes, a backup tool that whitelists config into git and scans it for secrets, read-only guards on the agents that only look. <span class="lesson">Lesson: a prompt rule is not a guardrail. Anything that must not happen gets a hook or a permission.</span></p></div>
-          </li>
-          <li>
-            <div class="when">Week 5 · Aug 28</div>
-            <div><h3>The bad day</h3>
-            <p>Three things in one day. An overnight headless run froze on a macOS consent dialog nobody was there to click. Three parallel browser scouts got the LinkedIn account flagged. Two iOS builds were rejected by Apple after the build service reported them finished. <span class="lesson">Lessons: headless work stays out of protected folders; one browser session at a time; "finished" is not "accepted", confirm at the destination.</span></p></div>
-          </li>
-          <li>
-            <div class="when">Week 5 · Aug 30 to 31</div>
-            <div><h3>Multiple sessions on one tree</h3>
-            <p>A commander session, a shared board, numbered rounds, deploy on every even round. Peers on one worktree can move each other's branches, so the protocol is small commits on main, pathspec-only adds, and never assume a message between sessions was delivered. Built and deployed an agency demo flow over the weekend this way.</p></div>
-          </li>
-          <li>
-            <div class="when">Week 6 · Sep 1</div>
-            <div><h3>The loop closes</h3>
-            <p>A nightly retro reads the day's call log and email replies and proposes prompt and rule changes. Proposals still need my yes. Same week: a local search index over 62,000 agent messages, so past decisions are recalled at zero token cost instead of re-derived.</p></div>
-          </li>
-          <li>
-            <div class="when">Week 6 · Sep 2 to 3</div>
-            <div><h3>Ship, then stop</h3>
-            <p>Version 1.0 submitted to Apple. The next day I set the project down: the thesis was right and no buyer had both the pain and a reason to pay. The set-down is a written handoff, every scheduled job accounted for, so it can be picked up or closed without rot. The system outlived the product, which was the point.</p></div>
-          </li>
-        </ol>
-      </section>
-
-      <section id="rowanstead">
-        <h2>Rowanstead</h2>
-        <div class="featured">
-          <h3>Eldercare coordination for the family member who is far away</h3>
-          <p>Web app, iOS app, agency-facing demo, voice notes, a digest, and the outreach and operations machine around it. Solo, unfunded, submitted to Apple on September 2, 2026.</p>
-          <div class="stats">
-            <div class="stat"><b>{contrib.total.toLocaleString()}</b><span>commits since first commit, Jul 27</span></div>
-            <div class="stat"><b>5 wk</b><span>first commit to App Store review</span></div>
-            <div class="stat"><b>1.0</b><span>submitted to Apple, Sep 2</span></div>
-          </div>
-          <div class="chips">
-            <span class="chip">Next.js</span><span class="chip">Postgres · Prisma</span><span class="chip">Expo · iOS</span><span class="chip">Playwright</span><span class="chip">Caddy · VPS</span><span class="chip">Claude Code</span><span class="chip">Hermes</span><span class="chip">Telegram ops</span>
-          </div>
-          <a class="more" href="/projects/rowanstead/">Read the full build story and post-mortem →</a>
-        </div>
-        <div class="prose">
-          <h3>The setup that built it</h3>
-          <p>One main Claude Code session as the lead engineer. A cheaper model for tightly specified code changes, dispatched in parallel. A review model gating every diff. A Telegram relay so the whole thing could be driven from a phone. Cron-scheduled agents for research, briefings and a nightly retro that read the day's logs and proposed rule changes. A backup tool that keeps the config in git and the secrets out of it.</p>
-          <p>Every guardrail on that list exists because something broke: a headless run stalled on a consent dialog, a build system said "finished" while Apple was rejecting the binary, three parallel scouts got an account flagged. The rules are written down in <a href="/projects/agent-harness/">Agent harness</a>.</p>
-        </div>
-      </section>
-
-      <section id="activity">
-        <h2>Activity</h2>
-        <Heatmap />
-        <p class="prose" style="margin-top:1rem;font-size:0.95rem">GitHub contributions from the first Rowanstead commit onward, across Rowanstead, the agent harness, the asymmetry screener and Keysreallysafe. Most repos are private, so this is pulled from the GitHub API at build time rather than the public profile.</p>
-      </section>
-
-      <section id="projects">
-        <h2>Projects</h2>
-        {projects.map((p) => (
-          <a class="card" href={`/projects/${p.id}/`}>
-            <div class="when">{p.data.period}</div>
-            <div>
-              <h3>{p.data.title}</h3>
-              <p>{p.data.summary}</p>
-              <div class="chips">{p.data.stack?.map((s) => <span class="chip">{s}</span>)}</div>
-            </div>
-          </a>
-        ))}
-      </section>
-
-      <section id="writing">
-        <h2>Writing</h2>
-        {posts.map((w) => (
-          <a class="card" href={`/writing/${w.id}/`}>
-            <div class="when">{fmt(w.data.date)}</div>
-            <div><h3>{w.data.title}</h3><p>{w.data.summary}</p></div>
-          </a>
-        ))}
-      </section>
+<Base home={true}>
+  <main>
+    <div class="hero">
+      <h1>George Shostakovych</h1>
+      <div class="sub">I build the system that ships the product.</div>
+      <p>Solo founder in the Bay Area. In five weeks I took an eldercare app from a blank repo to Apple's review queue, by building the agent setup around it and rebuilding it every time it broke. Now working on tools that read financial filings.</p>
+      <Icons />
     </div>
-  </div>
+
+    <section id="work">
+      <h2>Work</h2>
+      <div class="featured">
+        <h3>Rowanstead</h3>
+        <p>Eldercare coordination for the family member who is far away. Web app, iOS app, agency demo, voice notes, digest, and the outreach and operations machine around it. Solo and unfunded.</p>
+        <div class="stats">
+          <div class="stat"><b>{contrib.total.toLocaleString()}</b><span>commits from Jul 27</span></div>
+          <div class="stat"><b>5 wk</b><span>blank repo to App Store review</span></div>
+          <div class="stat"><b>1.0</b><span>submitted to Apple, Sep 2</span></div>
+        </div>
+        <div class="chips">
+          <span class="chip">Next.js</span><span class="chip">Postgres</span><span class="chip">Expo</span><span class="chip">Playwright</span><span class="chip">Caddy</span><span class="chip">Claude Code</span><span class="chip">Hermes</span>
+        </div>
+        <p style="margin-top:1rem"><a class="more" href="/projects/rowanstead/">Build story and post-mortem</a></p>
+      </div>
+      {projects.map((p) => (
+        <a class="row" href={`/projects/${p.id}/`}>
+          <div class="when">{p.data.period}</div>
+          <div>
+            <h3>{p.data.title} <span class="arr">→</span></h3>
+            <p>{p.data.summary}</p>
+            <div class="chips">{p.data.stack?.map((s) => <span class="chip">{s}</span>)}</div>
+          </div>
+        </a>
+      ))}
+      <div style="margin-top:2rem"><Heatmap /></div>
+    </section>
+
+    <section id="system">
+      <h2>The system, week by week</h2>
+      <div class="prose" style="margin-bottom:1.5rem"><p>How the setup started, what went wrong, and what each failure turned into. Every rule below exists because of the line above it.</p></div>
+      <ol class="timeline">
+        <li><div class="when">Week 1<br/>Jul 27</div><div><h3>One session, one engineer</h3><p>Claude Code in a terminal, me reviewing every diff. Next.js and Postgres on a VPS behind Caddy, an Expo app beside it. Fast at first, and every hour of output cost an hour of my attention.</p></div></li>
+        <li><div class="when">Week 2<br/>Aug 10</div><div><h3>The thesis dies on a call, the repo does not notice</h3><p>An agency owner told me the compliance record I was building was not her problem. I logged it and kept building on the old plan for three weeks, because every artifact in the repo pointed at the old plan. <span class="lesson">Lesson: a kill gate needs a fast path for "the premise is wrong", separate from "the numbers are bad".</span></p></div></li>
+        <li><div class="when">Week 4<br/>Aug 19</div><div><h3>Split the work by how much judgment it needs</h3><p>Tightly specified changes go to a cheaper model through a dispatcher that runs several in parallel. A second model reviews the diff before I see it. First bug found: the reviewer was rubber-stamping. <span class="lesson">Lesson: a reviewer that never rejects is not a reviewer. Log the rejection reasons and read them.</span></p></div></li>
+        <li><div class="when">Week 4<br/>Aug 24 to 26</div><div><h3>Operations from a phone</h3><p>A Telegram relay to drive sessions while out, a 07:00 morning brief, a deploy command that arms and then needs a confirm within five minutes, a backup tool that whitelists config into git and scans it for secrets, read-only guards on agents that only look. <span class="lesson">Lesson: a prompt rule is not a guardrail. Anything that must not happen gets a hook or a permission.</span></p></div></li>
+        <li><div class="when">Week 5<br/>Aug 28</div><div><h3>The bad day</h3><p>Three failures in one day. An overnight headless run froze on a macOS consent dialog nobody was there to click. Three parallel browser scouts got the LinkedIn account flagged. Two iOS builds were rejected by Apple after the build service reported them finished. <span class="lesson">Lessons: headless work stays out of protected folders; one browser session at a time; "finished" is not "accepted", confirm at the destination.</span></p></div></li>
+        <li><div class="when">Week 5<br/>Aug 30 to 31</div><div><h3>Multiple sessions on one tree</h3><p>A commander session, a shared board, numbered rounds, deploy on every even round. Peers on one worktree can move each other's branches, so the protocol is small commits on main, pathspec-only adds, and never assume a message between sessions was delivered. Built and deployed an agency demo flow over the weekend this way.</p></div></li>
+        <li><div class="when">Week 6<br/>Sep 1</div><div><h3>The loop closes</h3><p>A nightly retro reads the day's call log and email replies and proposes prompt and rule changes. Proposals still need my yes. Same week: a local search index over 62,000 agent messages, so past decisions are recalled at zero token cost instead of re-derived.</p></div></li>
+        <li><div class="when">Week 6<br/>Sep 2 to 3</div><div><h3>Ship, then stop</h3><p>Version 1.0 submitted to Apple. The next day I set the project down: the thesis was right and no buyer had both the pain and a reason to pay. The set-down is a written handoff with every scheduled job accounted for, so it can be picked up or closed without rot. The system outlived the product, which was the point.</p></div></li>
+      </ol>
+    </section>
+
+    <section id="writing">
+      <h2>Writing</h2>
+      {posts.map((w) => (
+        <a class="row" href={`/writing/${w.id}/`}>
+          <div class="when">{fmt(w.data.date)}</div>
+          <div><h3>{w.data.title} <span class="arr">→</span></h3><p>{w.data.summary}</p></div>
+        </a>
+      ))}
+    </section>
+
+    <section id="about" class="prose">
+      <h2>About</h2>
+      <p>I am a founder in the San Francisco Bay Area. What I am good at is not a language or a framework. It is building the system that turns an idea into a shipped product when there is one person to do it: the agents, the specs, the review gates, the deploy path, the guardrails, and the habit of writing down what broke.</p>
+      <p>The agents typed most of the code on this site's projects. I built the thing that made them useful, and the week-by-week story above is the most honest CV I have.</p>
+      <p>Before Rowanstead I built a distressed-credit screener that a fund uses daily. Now I am in customer discovery for a tool that reads filings so an analyst does not have to.</p>
+    </section>
+
+    <section id="contact" class="prose">
+      <h2>Contact</h2>
+      <p>Email is best: <a href="mailto:georgeshostakovich@gmail.com">georgeshostakovich@gmail.com</a>. I answer investors, founders building with agents, and anyone who reads filings for a living.</p>
+      <Icons />
+    </section>
+  </main>
   <script>
-    const links = [...document.querySelectorAll('nav.secnav a')];
+    const links = [...document.querySelectorAll('.nav li a')];
     const secs = links.map((a) => document.querySelector(a.getAttribute('href')));
     const io = new IntersectionObserver((es) => {
-      es.forEach((e) => { if (e.isIntersecting) { links.forEach((l) => l.classList.toggle('on', l.getAttribute('href') === '#' + e.target.id)); } });
-    }, { rootMargin: '-40% 0px -55% 0px' });
+      es.forEach((e) => { if (e.isIntersecting) links.forEach((l) => l.classList.toggle('on', l.getAttribute('href') === '#' + e.target.id)); });
+    }, { rootMargin: '-30% 0px -60% 0px' });
     secs.forEach((s) => s && io.observe(s));
+    links.forEach((l) => l.addEventListener('click', () => document.getElementById('nav').classList.remove('open')));
   </script>
 </Base>
