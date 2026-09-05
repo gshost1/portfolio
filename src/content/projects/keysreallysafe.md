@@ -2,7 +2,8 @@
 title: Keysreallysafe
 summary: Local API-key vault and token spend meter for a Mac. Keys live in the Keychain, usage comes from local agent logs, and nothing ever leaves the machine.
 period: September 2026
-status: in use, private repo
+status: in use, open source
+repo: https://github.com/gshost1/Keysreallysafe
 order: 5
 stack: ["Swift", "macOS Keychain", "Touch ID", "menu bar"]
 ---
