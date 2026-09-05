@@ -16,7 +16,8 @@ themselves.
 
 I built it solo: Next.js and Postgres on a VPS, an Expo mobile app, a
 Playwright test suite, and a small fleet of coding agents doing most of the
-typing. Version 1.0 went to Apple for review on September 2, 2026.
+typing. Version 1.0 went to Apple for review on September 2, 2026, and is live on the
+App Store as of September 4.
 
 ## The thesis, and how it changed
 
@@ -62,5 +63,5 @@ Ten conversations. Not a build.
 ## What I kept
 
 The kill-gate habit, written before the first call. The agent harness that
-built most of the product. And a working App Store submission that taught me
+built most of the product. And an app live on the App Store that taught me
 more about Apple review than I wanted to know.
