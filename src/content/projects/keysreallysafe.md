@@ -45,8 +45,12 @@ outcome so the key is never sent to a host it was not bound to.
 `keys ingest` reads the local logs that agent tools already write (Grok,
 Claude Code, Codex) and turns them into a spend table by day, model and
 session. `keys spend --week` prints it. `keys menubar` puts a spend sparkline
-in the macOS menu bar, with one tab per subscription showing percent left and
-the reset time, and `keys dashboard` serves a local web view.
+in the macOS menu bar, with one tab per subscription showing usage and the
+reset time, and `keys dashboard` serves a local web view. For Claude it shows
+the five-hour, Fable and weekly windows, read from Claude Code's own `/usage`
+cache and refreshed through the existing login without a model request. A
+reading that is over an hour old, from another account, or past its reset is
+shown as a dash rather than substituted with a different number.
 
 The dashboard binds to 127.0.0.1 only and refuses any LAN or public bind.
 Nothing is scraped from provider websites, and numbers that cannot be derived
