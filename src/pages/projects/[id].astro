@@ -12,7 +12,7 @@ const { Content } = await render(p);
   <main class="detail">
     <a class="back" href="/#work">← Work</a>
     <h1>{p.data.title}</h1>
-    <div class="meta">{p.data.period} · {p.data.status}{p.data.repo && <> · <a href={p.data.repo}>source on GitHub</a></>}</div>
+    <div class="meta">{p.data.period} · {p.data.status}{p.data.site && <> · <a href={p.data.site}>{new URL(p.data.site).host}</a></>}{p.data.repo && <> · <a href={p.data.repo}>source on GitHub</a></>}</div>
     <div class="chips" style="margin-bottom:2.5rem">{p.data.stack?.map((s) => <span class="chip">{s}</span>)}</div>
     <div class="prose"><Content /></div>
   </main>

@@ -49,7 +49,7 @@ says this before the install steps finish, and recommends project scope, so
 it is never switched on for a repo whose contents may not leave the machine.
 
 The raw gateway key does not have to live in Claude Code either. A launcher
-asks [Keysreallysafe](/projects/keysreallysafe/) for a short-lived grant and
+asks [Keysrs](/projects/keysreallysafe/) for a short-lived grant and
 hands the session a token and a loopback URL. When the token expires,
 compaction quietly falls back to the summary.
 
