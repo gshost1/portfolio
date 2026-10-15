@@ -1,5 +1,5 @@
 ---
-title: Rowanstead
+title: NodFirst
 summary: Coordination app for families caring for a parent from far away. Shipped to the App Store, set down after the buyer question failed twice.
 period: 2025 to September 2026
 status: set down, post-mortem
@@ -12,7 +12,7 @@ stack: ["Next.js", "Postgres", "Expo", "Playwright", "Claude Code", "Hermes"]
 A web and iOS app for the adult child who lives far from an aging parent and is
 coordinating care through siblings, a home-care agency and a phone. Tasks, rides,
 a shared log, a digest, voice notes, and later a version aimed at the agencies
-themselves.
+themselves. It was first called Rowanstead.
 
 I built it solo: Next.js and Postgres on a VPS, an Expo mobile app, a
 Playwright test suite, and a small fleet of coding agents doing most of the

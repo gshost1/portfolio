@@ -15,9 +15,9 @@ theme was agents that own their inference. The scenario: overnight, an agent
 reads 40 check-in events for an 81-year-old parent, such as a missed evening
 dose, bathroom trips, a confusion episode and a loud thud at 03:12 with no
 verbal response. In the morning it writes a digest for her two children with
-a task assigned to each, urgent alerts first. It is a build for NodFirst,
-the new name for [Rowanstead](/projects/rowanstead/). All of the data is synthetic,
-generated from a fixed seed.
+a task assigned to each, urgent alerts first. It is a build for
+[NodFirst](/projects/nodfirst/). All of the data is synthetic, generated from
+a fixed seed.
 
 Data like this usually goes to someone else's API. Here the model, Qwen3-4B,
 is served by vLLM on Akamai Cloud, and the privacy rule is enforced in code.

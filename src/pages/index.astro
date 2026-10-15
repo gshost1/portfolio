@@ -4,7 +4,7 @@ import Heatmap from '../components/Heatmap.astro';
 import Icons from '../components/Icons.astro';
 import contrib from '../data/contributions.json';
 import { getCollection } from 'astro:content';
-const projects = (await getCollection('projects')).filter((p) => p.id !== 'rowanstead').sort((a, b) => a.data.order - b.data.order);
+const projects = (await getCollection('projects')).filter((p) => p.id !== 'nodfirst').sort((a, b) => a.data.order - b.data.order);
 const posts = (await getCollection('writing')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 ---
@@ -21,7 +21,7 @@ const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
       <h2>Work<small>One flagship, the tools and experiments since, and the commit record behind them.</small></h2>
       <div class="body">
       <div class="featured">
-        <h3>Rowanstead</h3>
+        <h3>NodFirst</h3>
         <p>Eldercare coordination for the family member who is far away. Web app, iOS app, agency demo, voice notes, digest, and the outreach and operations machine around it. Solo and unfunded.</p>
         <div class="stats">
           <div class="stat"><b>{contrib.total.toLocaleString()}</b><span>commits from Jul 27</span></div>
@@ -31,7 +31,7 @@ const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
         <div class="chips">
           <span class="chip">Next.js</span><span class="chip">Postgres</span><span class="chip">Expo</span><span class="chip">Playwright</span><span class="chip">Caddy</span><span class="chip">Claude Code</span><span class="chip">Hermes</span>
         </div>
-        <p style="margin-top:1rem"><a class="more" href="/projects/rowanstead/">Build story and post-mortem</a></p>
+        <p style="margin-top:1rem"><a class="more" href="/projects/nodfirst/">Build story and post-mortem</a></p>
       </div>
       <div class="grid2">
       {projects.map((p) => (
@@ -80,7 +80,7 @@ const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
       <div class="body prose">
       <p>I am a founder in the San Francisco Bay Area. What I am good at is not a language or a framework. It is building the system that turns an idea into a shipped product when there is one person to do it: the agents, the specs, the review gates, the deploy path, the guardrails, and the habit of writing down what broke.</p>
       <p>The agents typed most of the code on this site's projects. I built the thing that made them useful, and the week-by-week story above is the most honest CV I have.</p>
-      <p>Before Rowanstead I built a distressed-credit screener that a fund uses daily. Now I am in customer discovery for a tool that reads filings so an analyst does not have to.</p>
+      <p>Before NodFirst I built a distressed-credit screener that a fund uses daily. Now I am in customer discovery for a tool that reads filings so an analyst does not have to.</p>
       </div>
     </section>
 

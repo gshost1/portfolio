@@ -3,7 +3,7 @@ import snapshot from '../data/contributions.json';
 ---
 <div class="heat" id="heat" data-snapshot={JSON.stringify(snapshot.days)}>
   <div class="top">
-    <span class="title">GitHub activity since the first Rowanstead commit, Jul 27 2026</span>
+    <span class="title">GitHub activity since the first NodFirst commit, Jul 27 2026</span>
     <span class="status"><span class="dot" id="h-dot"></span><span id="h-status">snapshot</span></span>
   </div>
   <div class="body">
@@ -27,7 +27,7 @@ import snapshot from '../data/contributions.json';
   const grid = document.getElementById('h-grid');
   const detail = document.getElementById('h-detail');
   let all = JSON.parse(el.dataset.snapshot).map((d) => ({ date: d.date, count: d.contributionCount }));
-  let range = 'rowanstead';
+  let range = 'nodfirst';
   const fmt = (s) => new Date(s + 'T00:00:00Z').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
   const level = (n) => (n === 0 ? '' : n < 5 ? 'l1' : n < 15 ? 'l2' : n < 40 ? 'l3' : 'l4');
   function slice() {
