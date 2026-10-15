@@ -1,9 +1,9 @@
 ---
 title: Filings reader
-summary: A tool that reads SEC filings and credit documents so an analyst does not have to. In customer discovery.
-period: September 2026 to now
-status: in test
-order: 1
+summary: A tool that reads SEC filings and credit documents so an analyst does not have to. Explored in customer discovery, then set aside for NodFirst.
+period: September to October 2026
+status: moved on
+order: 11
 stack: ["Python", "LLM extraction", "SEC EDGAR"]
 ---
 
@@ -21,16 +21,22 @@ spreadsheet. Anything that becomes a number stays in deterministic code.
 
 ## The gate
 
-Before writing more code I am asking ten people who do this work one question:
+Before writing more code I set out to ask ten people who do this work one
+question:
 
 > What did you read by hand last week, and what did it cost you, in hours or
 > in things you missed?
 
-If fewer than three of ten name a document type and a cost, the idea is
-dropped. This site will say so either way.
+If fewer than three of ten named a document type and a cost, the idea would
+be dropped.
 
 ## Where it comes from
 
 A year of building a distressed-credit screener, where the bottleneck was
 never the math. It was that credit agreements have no structured tags and
 someone has to read them.
+
+## Where it stands
+
+In October I moved on to put my time back into
+[NodFirst](/projects/nodfirst/).
