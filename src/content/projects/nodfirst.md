@@ -4,7 +4,7 @@ summary: HR onboarding agent that sorts new-hire requests, suggests who should h
 period: September 2026
 status: paused, open source
 repo: https://github.com/gshost1/nodfirst
-order: 7
+order: 11
 stack: ["Node.js", "SQLite", "Claude", "Jev", "Ollama", "vanilla JS"]
 ---
 

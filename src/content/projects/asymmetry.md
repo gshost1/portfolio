@@ -3,7 +3,7 @@ title: Asymmetry screener
 summary: Research tool for levered small-caps, built on the SEC bulk XBRL archive. Used daily by a fund.
 period: 2025 to now
 status: in use
-order: 3
+order: 5
 stack: ["Python", "XBRL", "SEC EDGAR"]
 ---
 

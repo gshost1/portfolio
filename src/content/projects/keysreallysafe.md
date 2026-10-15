@@ -5,7 +5,7 @@ period: September 2026 to now
 status: live, v0.11.1, free and MIT
 site: https://keysrs.com
 repo: https://github.com/gshost1/Keysreallysafe
-order: 5
+order: 7
 stack: ["Swift", "macOS Keychain", "Touch ID", "menu bar", "loopback gateway"]
 ---
 

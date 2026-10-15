@@ -3,7 +3,7 @@ title: Agent harness
 summary: The multi-agent coding and operations setup one person uses to work like a small team, and the guardrails that came from breaking it.
 period: "2026"
 status: in use
-order: 4
+order: 6
 stack: ["Claude Code", "Hermes", "Telegram", "launchd", "Pi"]
 ---
 

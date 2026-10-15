@@ -4,7 +4,7 @@ summary: Claude Code plugin that replaces the compaction summary with pruning. A
 period: September 2026
 status: in use, open source
 repo: https://github.com/gshost1/vercel-compaction
-order: 6
+order: 8
 stack: ["TypeScript", "Claude Code plugin", "Vercel AI Gateway", "function hooks"]
 ---
 
