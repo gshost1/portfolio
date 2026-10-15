@@ -1,8 +1,8 @@
 ---
 title: Keysrs
-summary: Free, open-source Mac menu bar app that shows Claude Code, Codex and Grok plan limits and keeps API keys in the Keychain behind Touch ID. Agents get a scoped grant, never the key, and nothing leaves the machine.
+summary: Free, open-source Mac menu bar app that shows Claude Code, Codex, Grok and Droid usage and keeps API keys in the Keychain behind Touch ID. Agents get a scoped grant, never the key, and nothing leaves the machine.
 period: September 2026 to now
-status: live, v0.10.1, free and MIT
+status: live, v0.11.1, free and MIT
 site: https://keysrs.com
 repo: https://github.com/gshost1/Keysreallysafe
 order: 5
@@ -22,9 +22,9 @@ signed, notarized Mac app you drag to Applications, live at
 ## The meter
 
 The menu bar shows each tool's plan windows as percent used and time to reset:
-Claude's five-hour, weekly and Fable windows, Codex and Grok weekly. The
-numbers come from the files Claude Code, Codex and Grok already write on the
-Mac. No logins, no scraping, no provider websites. A reading that is stale,
+Claude's five-hour, weekly and Fable windows, Codex and Grok weekly, and
+Droid's five-hour, weekly and monthly token counts. The numbers come from the
+files these tools already write on the Mac. No logins, no scraping, no provider websites. A reading that is stale,
 from another account or past its reset shows as a dash rather than a
 substitute number.
 
@@ -49,6 +49,11 @@ agent uses the token against a gateway on 127.0.0.1, which swaps in the real
 secret on the way out. A request with no grant gets a 401, an out-of-scope one
 a named 403 or 429, and screen lock or `keys revoke` kills every grant.
 
+Since 0.11, `keys agent <agent> <key>` launches Droid, Codex, Grok or Claude
+Code on one Touch ID. The agent's config file names an environment variable,
+not a secret; the launcher fills it with a fresh grant that is revoked when the
+agent exits. `keys tunnel` carries the gateway to a remote machine over SSH.
+
 The 0.9.2 release fixed two gateway bugs: grant tokens in a secondary header
 or query parameter were forwarded upstream, and an oversized chunked request
 could crash the app before authentication; it now gets a 413.
@@ -58,7 +63,7 @@ could crash the app before authentication; it now gets a 413.
 Versions 0.6 to 0.8 had a 14-day trial, a license key and Stripe checkout.
 0.9.0 removed all of it: Keysrs is MIT licensed and needs no account. The only
 outbound calls are opt-in: an update check against GitHub releases, off by
-default, and an anonymous usage comparison whose box starts unticked.
+default, which can now download, verify and install the new version itself, and an anonymous usage comparison whose box starts unticked.
 
 ## What I learned
 
