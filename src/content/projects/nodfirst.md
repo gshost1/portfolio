@@ -1,13 +1,14 @@
 ---
 title: NodFirst
-summary: Coordination app for families caring for a parent from far away. Shipped to the App Store, set down after the buyer question failed twice.
-period: 2025 to September 2026
-status: set down, post-mortem
+summary: Coordination app for families caring for a parent from far away. Shipped to the App Store, set down in September after the buyer question failed twice, and active again since October.
+period: 2025 to now
+status: active again
+site: https://nodfirst.com
 order: 2
 stack: ["Next.js", "Postgres", "Expo", "Playwright", "Claude Code", "Hermes"]
 ---
 
-## What it was
+## What it is
 
 A web and iOS app for the adult child who lives far from an aging parent and is
 coordinating care through siblings, a home-care agency and a phone. Tasks, rides,
@@ -32,7 +33,7 @@ The second thesis was **absence**. The real pain belongs to the person who is
 not in the room, and it was my own problem, which is why I believed in it.
 That thesis I still think is right.
 
-## Why it was set down
+## Why it was set down in September
 
 Because a correct thesis is not a business until someone with the pain also
 has a reason to pay.
@@ -56,9 +57,19 @@ from 28 DMs, a 649-row dial list) was aimed at the thesis that had already
 died. The gate that mattered, ten real conversations with people far from a
 parent, stood at **one of ten** on the day I stopped.
 
-## What I would do first if I picked it back up
+## What I wrote when I stopped
 
 Ten conversations. Not a build.
+
+## Back on
+
+In October I picked it back up under the new name. The first work since
+then is two builds on one day, October 12, both on synthetic data and
+sharing one core:
+[Triage Router](/projects/triage-router/), which routes each caregiving
+message to a differently sized model by risk, and
+[Night Watch](/projects/night-watch/), an overnight agent that runs its own
+model so health data stays on a server I control.
 
 ## What I kept
 

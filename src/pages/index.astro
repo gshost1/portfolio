@@ -31,7 +31,7 @@ const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
         <div class="chips">
           <span class="chip">Next.js</span><span class="chip">Postgres</span><span class="chip">Expo</span><span class="chip">Playwright</span><span class="chip">Caddy</span><span class="chip">Claude Code</span><span class="chip">Hermes</span>
         </div>
-        <p style="margin-top:1rem"><a class="more" href="/projects/nodfirst/">Build story and post-mortem</a></p>
+        <p style="margin-top:1rem"><a class="more" href="/projects/nodfirst/">Build story, post-mortem and where it stands now</a></p>
       </div>
       <div class="grid2">
       {projects.map((p) => (
@@ -59,6 +59,7 @@ const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
         <li><div class="when">Week 5<br/>Aug 30 to 31</div><div><h3>Multiple sessions on one tree</h3><p>A commander session, a shared board, numbered rounds, deploy on every even round. Peers on one worktree can move each other's branches, so the protocol is small commits on main, pathspec-only adds, and never assume a message between sessions was delivered. Built and deployed an agency demo flow over the weekend this way.</p></div></li>
         <li><div class="when">Week 6<br/>Sep 1</div><div><h3>The loop closes</h3><p>A nightly retro reads the day's call log and email replies and proposes prompt and rule changes. Proposals still need my yes. Same week: a local search index over 62,000 agent messages, so past decisions are recalled at zero token cost instead of re-derived.</p></div></li>
         <li><div class="when">Week 6<br/>Sep 2 to 3</div><div><h3>Ship, then stop</h3><p>Version 1.0 submitted to Apple. The next day I set the project down: the thesis was right and no buyer had both the pain and a reason to pay. The set-down is a written handoff with every scheduled job accounted for, so it can be picked up or closed without rot. The system outlived the product, which was the point.</p></div></li>
+        <li><div class="when">Week 12<br/>Oct 12</div><div><h3>Back on, as NodFirst</h3><p>The product is picked back up under a new name. First work since the set-down: two event builds in one day on one shared core, a triage router that sends each caregiving message to a model sized to its risk, and an overnight agent that runs its own model so health data never leaves the server.</p></div></li>
       </ol>
       </div>
     </section>
