@@ -1,8 +1,8 @@
 ---
 title: NodFirst
-summary: Coordination app for families caring for a parent from far away. Shipped to the App Store, set down in September after the buyer question failed twice, and active again since October.
-period: 2025 to now
-status: active again
+summary: Coordination app for families caring for a parent from far away. Shipped to the App Store, set down in September after the buyer question failed twice, picked back up in October and paused again.
+period: 2025 to October 2026
+status: paused
 site: https://nodfirst.com
 order: 2
 stack: ["Next.js", "Postgres", "Expo", "Playwright", "Claude Code", "Hermes"]
@@ -61,7 +61,7 @@ parent, stood at **one of ten** on the day I stopped.
 
 Ten conversations. Not a build.
 
-## Back on
+## Back on, briefly
 
 In October I picked it back up under the new name. The first work since
 then is two builds on one day, October 12, both on synthetic data and
@@ -70,6 +70,8 @@ sharing one core:
 message to a differently sized model by risk, and
 [Night Watch](/projects/night-watch/), an overnight agent that runs its own
 model so health data stays on a server I control.
+
+No new calls came out of it, so it is paused again.
 
 ## What I kept
 

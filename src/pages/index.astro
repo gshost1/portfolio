@@ -13,7 +13,7 @@ const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
     <div class="hero">
       <h1>George Shostakovych</h1>
       <div class="sub">I build the system that ships the product.</div>
-      <p>Solo founder in the Bay Area. In five weeks I took NodFirst, an eldercare app, from a blank repo to the App Store, by building the agent setup around it and rebuilding it every time it broke. I set it down in September; now I am back on it.</p>
+      <p>Solo founder in the Bay Area. In five weeks I took NodFirst, an eldercare app, from a blank repo to the App Store, by building the agent setup around it and rebuilding it every time it broke. Now I test what models and coding agents actually do, starting with whether they hide their shortcuts.</p>
       <Icons />
     </div>
 
@@ -31,7 +31,7 @@ const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
         <div class="chips">
           <span class="chip">Next.js</span><span class="chip">Postgres</span><span class="chip">Expo</span><span class="chip">Playwright</span><span class="chip">Caddy</span><span class="chip">Claude Code</span><span class="chip">Hermes</span>
         </div>
-        <p style="margin-top:1rem"><a class="more" href="/projects/nodfirst/">Build story, post-mortem and where it stands now</a></p>
+        <p style="margin-top:1rem"><a class="more" href="/projects/nodfirst/">Build story and post-mortem</a></p>
       </div>
       <div class="grid2">
       {projects.map((p) => (
@@ -59,13 +59,13 @@ const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
         <li><div class="when">Week 5<br/>Aug 30 to 31</div><div><h3>Multiple sessions on one tree</h3><p>A commander session, a shared board, numbered rounds, deploy on every even round. Peers on one worktree can move each other's branches, so the protocol is small commits on main, pathspec-only adds, and never assume a message between sessions was delivered. Built and deployed an agency demo flow over the weekend this way.</p></div></li>
         <li><div class="when">Week 6<br/>Sep 1</div><div><h3>The loop closes</h3><p>A nightly retro reads the day's call log and email replies and proposes prompt and rule changes. Proposals still need my yes. Same week: a local search index over 62,000 agent messages, so past decisions are recalled at zero token cost instead of re-derived.</p></div></li>
         <li><div class="when">Week 6<br/>Sep 2 to 3</div><div><h3>Ship, then stop</h3><p>Version 1.0 submitted to Apple. The next day I set the project down: the thesis was right and no buyer had both the pain and a reason to pay. The set-down is a written handoff with every scheduled job accounted for, so it can be picked up or closed without rot. The system outlived the product, which was the point.</p></div></li>
-        <li><div class="when">Week 12<br/>Oct 12</div><div><h3>Back on, as NodFirst</h3><p>The product is picked back up under a new name. First work since the set-down: two event builds in one day on one shared core, a triage router that sends each caregiving message to a model sized to its risk, and an overnight agent that runs its own model so health data never leaves the server.</p></div></li>
+        <li><div class="when">Week 12<br/>Oct 12</div><div><h3>Back on as NodFirst, briefly</h3><p>The product is picked back up under a new name. First work since the set-down: two event builds in one day on one shared core, a triage router that sends each caregiving message to a model sized to its risk, and an overnight agent that runs its own model so health data never leaves the server. No new calls came out of it, and it is paused again.</p></div></li>
       </ol>
       </div>
     </section>
 
     <section id="writing">
-      <h2>Writing<small>Notes on shipping alone and what it costs.</small></h2>
+      <h2>Writing<small>Notes on shipping alone, and on what models actually do.</small></h2>
       <div class="body">
       {posts.map((w) => (
         <a class="row" href={`/writing/${w.id}/`}>
@@ -81,14 +81,14 @@ const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
       <div class="body prose">
       <p>I am a founder in the San Francisco Bay Area. What I am good at is not a language or a framework. It is building the system that turns an idea into a shipped product when there is one person to do it: the agents, the specs, the review gates, the deploy path, the guardrails, and the habit of writing down what broke.</p>
       <p>The agents typed most of the code on this site's projects. I built the thing that made them useful, and the week-by-week story above is the most honest CV I have.</p>
-      <p>Before NodFirst I built a distressed-credit screener that a fund uses daily. I set NodFirst down in September, picked it back up in October, and it is what I am working on now.</p>
+      <p>Before NodFirst I built a distressed-credit screener that a fund uses daily. I set NodFirst down in September, picked it back up in October, and paused it again when no new calls came. Now I am building evaluations of what models and coding agents actually do.</p>
       </div>
     </section>
 
     <section id="contact">
       <h2>Contact</h2>
       <div class="body prose">
-      <p>Email is best: <a href="mailto:georgeshostakovich@gmail.com">georgeshostakovich@gmail.com</a>. I answer investors, founders building with agents, and anyone caring for a parent from far away.</p>
+      <p>Email is best: <a href="mailto:georgeshostakovich@gmail.com">georgeshostakovich@gmail.com</a>. I answer investors, founders building with agents, and anyone measuring what models and agents actually do.</p>
       <Icons />
       </div>
     </section>
