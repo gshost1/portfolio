@@ -14,7 +14,8 @@ Messages an adult child sends about a parent are not equally urgent. A
 question about a visit with a neighbor and "Mom had a fall in the kitchen"
 should not get the same model or cost the same. I built this solo for the
 OIS Workshop Day (MLH + DigitalOcean) on October 12, 2026, around one idea:
-route by caregiving risk.
+route by caregiving risk. NodFirst is the new name for
+[Rowanstead](/projects/rowanstead/).
 
 It is not medical advice. The agent never diagnoses or suggests medication
 changes, and anything that could be an emergency gets told to call 911 or

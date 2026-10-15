@@ -62,13 +62,14 @@ remained, after five about 1%, on every model tested.
 While reading the engine I found that a tool result already capped is
 capped again at every later compaction, so its real content shrinks each
 round. In a 400-line grep, 60 paths were visible after the first cap, then
-48, then 35. That went upstream as
+48, then 35. I reported it as
 [vercel/eve#4769](https://github.com/vercel/eve/issues/4769), and the eve
 team confirmed it and had a fix up within hours in
-[vercel/eve#4771](https://github.com/vercel/eve/pull/4771). With that fix,
+[vercel/eve#4771](https://github.com/vercel/eve/pull/4771), merged on
+October 14. With that fix,
 trimming lasts 8 to 12 rounds before a summary is needed instead of 5 to 6.
 
-A second issue proposes keeping the start and the end of a capped result in
+I also proposed keeping the start and the end of a capped result in
 [vercel/eve#4772](https://github.com/vercel/eve/issues/4772). eve's `bash`
 tool already keeps the end of output because that is where errors appear.
 

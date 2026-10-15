@@ -15,7 +15,8 @@ theme was agents that own their inference. The scenario: overnight, an agent
 reads 40 check-in events for an 81-year-old parent, such as a missed evening
 dose, bathroom trips, a confusion episode and a loud thud at 03:12 with no
 verbal response. In the morning it writes a digest for her two children with
-a task assigned to each, urgent alerts first. All of the data is synthetic,
+a task assigned to each, urgent alerts first. It is a build for NodFirst,
+the new name for [Rowanstead](/projects/rowanstead/). All of the data is synthetic,
 generated from a fixed seed.
 
 Data like this usually goes to someone else's API. Here the model, Qwen3-4B,
@@ -66,7 +67,5 @@ NORMAL and SURGE, and SURGE used 65% fewer tokens.
 
 I built it alone, with an AI coding agent, against an offline mock mode with
 canned replies and a synthetic load curve, so nothing called a real model or
-cost money until the event. Most of the code was written the night before,
-which the README discloses under the build-on-site rule. On the day I swapped
-in the real endpoint through configuration, with no code changes, and added
+cost money until the event. On the day I swapped in the real endpoint through configuration, with no code changes, and added
 the fast lane after the stress run showed alerts waiting on the queue.
