@@ -46,7 +46,7 @@ h1, h2, h3 { color: var(--fg); font-weight: 500; letter-spacing: -0.02em; line-h
 .nav .right { display: flex; align-items: center; gap: 0.5rem; margin-left: auto; }
 .nav ul { margin-left: auto; }
 .theme { background: none; border: 1px solid var(--rule); color: var(--fg2); border-radius: 8px; width: 2rem; height: 2rem; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: all .2s; }
-.theme:hover { color: var(--fg); border-color: var(--rule2); transform: rotate(15deg); }
+@media (hover: hover) { .theme:hover { color: var(--fg); border-color: var(--rule2); } }
 .theme svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 html[data-theme="light"] .theme .sun { display: none; }
 html:not([data-theme="light"]) .theme .moon { display: none; }
