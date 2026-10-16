@@ -87,6 +87,7 @@ section > .body { min-width: 0; }
 .prose code { font-family: var(--mono); font-size: 0.82em; background: var(--bg3); border: 1px solid var(--rule); padding: 0.1em 0.35em; border-radius: 4px; }
 .prose pre { overflow-x: auto; padding: 1rem; background: var(--bg2); border: 1px solid var(--rule); border-radius: 8px; }
 .prose pre code { background: none; border: 0; padding: 0; }
+.prose img { display: block; max-width: 100%; height: auto; margin: 1.5rem 0; border-radius: 8px; }
 .prose table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
 .prose td, .prose th { text-align: left; padding: 0.5rem 0.75rem 0.5rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
 @media (max-width: 40rem) { .prose table { display: block; overflow-x: auto; } }
