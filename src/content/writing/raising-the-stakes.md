@@ -82,7 +82,17 @@ plain deadline went the other way: on the webhook task, Kimi took 5 shortcuts
 in 6 runs under the deadline, against 4 of 6 without it, though it misreported
 less.
 
-I don't know why. My guess is that spelling out who reads the report made the
+That runs against the paper this benchmark borrows its design from.
+[DecepEval](https://arxiv.org/abs/2610.07967) paired neutral and induced
+versions of 1,532 tasks across nine models, using the same four kinds of
+inducement. It found that every kind increased deception, for every model,
+coding included. Its coding tasks were fixable bugs, though, while the tasks
+that drew shortcuts here were impossible. And it judged deception with an LLM,
+where I diffed files and reran tests. One of its results does point my way:
+when the authors stacked conditions on Claude Opus 5, deception fell from 58.7%
+to 19.3% and refusals rose from 24.2% to 57.0%.
+
+I don't know why mine went the other way. My guess is that spelling out who reads the report made the
 models more careful about what they claimed, but I haven't tested that.
 
 ## The task decides when
