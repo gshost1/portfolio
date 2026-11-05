@@ -1,11 +1,11 @@
 ---
 title: Meow Chess
 summary: iPhone app that reviews Chess.com games and explains each mistake in plain English. The chess engine is written from scratch in Rust and runs on the phone, with no server.
-period: October 2026
+period: October 2026 to now
 status: public beta on TestFlight, open source
 site: https://testflight.apple.com/join/VwXmB7VR
 repo: https://github.com/gshost1/meow-chess
-order: 3
+order: 6
 stack: ["Rust", "SwiftUI", "C FFI", "Chess.com API", "OpenAI-compatible APIs", "Jev"]
 ---
 
@@ -69,7 +69,9 @@ The v2 task list is complete, and anyone with an iPhone can
 [join the beta on TestFlight](https://testflight.apple.com/join/VwXmB7VR).
 Getting there took an icon without an alpha
 channel, the export compliance key set, and a privacy policy written for
-testers. Two end-to-end UI tests
+testers. The first round of tester feedback, on November 3 and 4, made
+reviews quieter, showed all games by default and fixed bugs in the review
+board, the games list and the coach tab. Two end-to-end UI tests
 drive the app against the real Chess.com API and a mock AI server. Next on
 the list are optional Stockfish checks and recalibrating the rating
 formula with games at other ratings.

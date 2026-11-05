@@ -1,11 +1,11 @@
 ---
 title: eve-tokyo
-summary: Compaction drift benchmark for Vercel's eve agent framework. It replays long coding sessions through eve's real compaction engine, compacts them repeatedly, and scores which exact file paths, errors, commands and decisions are still in context after each round.
-period: October 2026
+summary: Benchmarks and long-run tests for Vercel's eve agent framework, built on eve's own code. Found that compaction made summaries call failing builds passing in 40% of checkpoints, and reported six eve bugs; the eve team has fixed three so far.
+period: October 2026 to now
 status: open source
 repo: https://github.com/gshost1/eve-tokyo
-order: 4
-stack: ["TypeScript", "Vitest", "Python", "eve", "Vercel AI Gateway", "DigitalOcean inference"]
+order: 2
+stack: ["TypeScript", "Vitest", "Python", "eve", "Vercel AI Gateway", "DigitalOcean inference", "Docker"]
 ---
 
 ## Why it exists
@@ -57,21 +57,67 @@ models filled the gap with "passed". Summaries also kept meaning better
 than exact strings: after one summary about 5% of exact error strings
 remained, after five about 1%, on every model tested.
 
-## Contributed upstream
+## After the fix
 
-While reading the engine I found that a tool result already capped is
-capped again at every later compaction, so its real content shrinks each
-round. In a 400-line grep, 60 paths were visible after the first cap, then
-48, then 35. I reported it as
-[vercel/eve#4769](https://github.com/vercel/eve/issues/4769), and the eve
-team confirmed it and had a fix up within hours in
-[vercel/eve#4771](https://github.com/vercel/eve/pull/4771), merged on
-October 14. With that fix,
-trimming lasts 8 to 12 rounds before a summary is needed instead of 5 to 6.
+The eve team merged fixes for both compaction reports on October 15 (below).
+I reran the benchmark on October 25 against eve as shipped at `a3654ef`,
+with the same sessions, seeds and scorer and no patches. Checkpoints that
+called a failing build or test passing went from 29 of 75 on the five
+summarizers rerun to **0 of 75**. Exact retention now tracks the head and
+tail run, and sessions go 10 to 15 cap rounds before their first summary
+instead of 6 to 7, because a capped result no longer shrinks again at every
+compaction: fewer paid summaries for the same work. Kimi was not rerun, to
+keep the cost down.
 
-I also proposed keeping the start and the end of a capped result in
-[vercel/eve#4772](https://github.com/vercel/eve/issues/4772). eve's `bash`
-tool already keeps the end of output because that is where errors appear.
+## Long-run sessions
+
+The second half of the repo drives real multi-hour eve sessions on coding
+tasks: changes to real repositories and a command-line tool built from
+scratch over 48 features in three stages. Each new message adds a rule, so
+the rules from the first message survive only through compaction. A driver
+starts a headless `eve dev`, sends continue prompts until the agent reports
+done or a turn, budget or time limit is hit, then asks recall questions and
+runs the task's checks in a sandbox container. Every model call, context
+dump, tool call and hook event is logged.
+
+Two of the bug reports below, #5350 and #5936, came out of these runs.
+
+## Reported upstream
+
+Six issues on [vercel/eve](https://github.com/vercel/eve), each with a
+minimal reproduction. The fixes were written and merged by the eve team.
+
+- **Re-capping.** A tool result already capped was capped again at every
+  later compaction, so it shrank each round: in a 400-line grep, 60 paths
+  visible after the first cap, then 48, then 35.
+  [#4769](https://github.com/vercel/eve/issues/4769), reported October 14,
+  fixed within hours in [#4771](https://github.com/vercel/eve/pull/4771).
+  Repro: [eve-recap-repro](https://github.com/gshost1/eve-recap-repro).
+- **Head only.** Compaction kept only the start of a large tool result,
+  dropping test failures, errors and the exit code. eve's `bash` tool
+  already keeps the end of output for that reason.
+  [#4772](https://github.com/vercel/eve/issues/4772), fixed in
+  [#4773](https://github.com/vercel/eve/pull/4773), both merged October 15.
+- **A 429 ended the session.** When the compaction call inside a turn hit
+  a provider 429, the whole session ended instead of that turn.
+  [#5350](https://github.com/vercel/eve/issues/5350), fixed in
+  [#5355](https://github.com/vercel/eve/pull/5355) on October 27; the eve
+  0.84.1 release notes credit the report and reproduction. Repro:
+  [eve-turnstep-escape-repro](https://github.com/gshost1/eve-turnstep-escape-repro).
+- **A late question after cancel.** Cancelling or clearing while a turn
+  is dispatching `ask_question` leaves a stale question open, and the next
+  message fails the session.
+  [#5752](https://github.com/vercel/eve/issues/5752), with a fix in review
+  in [#5754](https://github.com/vercel/eve/pull/5754).
+- **Frozen after a crash.** A step interrupted by a crash stays frozen for
+  about 14 minutes after a restart, because recovery never matches the dead
+  owner's lease. [#5386](https://github.com/vercel/eve/issues/5386), open.
+  Repro: [eve-resume-freeze-repro](https://github.com/gshost1/eve-resume-freeze-repro).
+- **Checkpoints that lose rules.** In a long coding task, summary
+  checkpoints became deltas pointing at earlier checkpoints that had
+  already been discarded, and user rules disappeared or were rewritten.
+  [#5936](https://github.com/vercel/eve/issues/5936), reported November 4,
+  open.
 
 ## The companion repro
 
@@ -86,8 +132,9 @@ backslashes piling up while the kept paths drop from 60 to 35 and the
 
 ## Caveats
 
-The sessions are synthetic, and errors are planted at the end of outputs
-as in real test and build runs, which favours a head and tail cap by
-construction. There are 3 seeds per model and summaries vary run to run,
-so the tables show direction rather than precision. Results were measured
-against eve 0.79.0 at commit `0fd4240`.
+The benchmark sessions are synthetic, and errors are planted at the end of
+outputs as in real test and build runs, which favours a head and tail cap
+by construction. There are 3 seeds per model and summaries vary run to
+run, so the tables show direction rather than precision. The main result
+was measured against eve 0.79.0 at commit `0fd4240`, the rerun at
+`a3654ef`.

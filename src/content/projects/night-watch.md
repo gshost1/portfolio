@@ -4,7 +4,7 @@ summary: Overnight elder-care agent that runs its own model with vLLM on Akamai 
 period: October 2026
 status: hackathon build, open source
 repo: https://github.com/gshost1/nodfirst-night-watch
-order: 9
+order: 11
 stack: ["Python", "FastAPI", "vLLM", "Qwen3-4B", "Akamai Cloud", "MCP", "Chart.js"]
 ---
 

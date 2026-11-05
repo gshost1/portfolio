@@ -4,7 +4,7 @@ summary: Caregiving chat that sorts each message about an aging parent into rout
 period: October 2026
 status: workshop build, open source
 repo: https://github.com/gshost1/nodfirst-triage-router
-order: 10
+order: 12
 stack: ["Python", "FastAPI", "SQLite", "DigitalOcean Serverless Inference", "DigitalOcean Inference Router", "OpenAI SDK", "whisper.cpp", "vanilla JS"]
 ---
 

@@ -3,7 +3,7 @@ title: Filings reader
 summary: A tool that reads SEC filings and credit documents so an analyst does not have to. Explored in customer discovery, then set aside for NodFirst.
 period: September to October 2026
 status: moved on
-order: 11
+order: 13
 stack: ["Python", "LLM extraction", "SEC EDGAR"]
 ---
 
