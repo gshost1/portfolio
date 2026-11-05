@@ -2,9 +2,8 @@
 import Base from '../layouts/Base.astro';
 import Heatmap from '../components/Heatmap.astro';
 import Icons from '../components/Icons.astro';
-import contrib from '../data/contributions.json';
 import { getCollection } from 'astro:content';
-const projects = (await getCollection('projects')).filter((p) => p.id !== 'nodfirst').sort((a, b) => a.data.order - b.data.order);
+const projects = (await getCollection('projects')).filter((p) => p.id !== 'keysreallysafe').sort((a, b) => a.data.order - b.data.order);
 const posts = (await getCollection('writing')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 ---
@@ -12,26 +11,26 @@ const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
   <main>
     <div class="hero">
       <h1>George Shostakovych</h1>
-      <div class="sub">I build the system that ships the product.</div>
-      <p>Solo founder in the Bay Area. In five weeks I took NodFirst, an eldercare app, from a blank repo to the App Store, by building the agent setup around it and rebuilding it every time it broke. Now I test what models and coding agents actually do, starting with whether they hide their shortcuts.</p>
+      <div class="sub">I build the guardrails that let coding agents work unattended.</div>
+      <p>Solo founder in the Bay Area. Since October I have been building for coding agents that run with nobody watching: <a href="/projects/keysreallysafe/">Keysrs</a>, so an agent gets a short-lived token instead of the API key; <a href="/projects/brakeline/">brakeline</a>, so a stuck agent stops before it burns the budget or the work; and <a href="/projects/lie-you-die/">lie-you-die</a>, a benchmark that checks what an agent did against what it reported. Before that I took NodFirst, an eldercare app, from a blank repo to the App Store in five weeks.</p>
       <Icons />
     </div>
 
     <section id="work">
-      <h2>Work<small>One flagship, the tools and experiments since, and the commit record behind them.</small></h2>
+      <h2>Work<small>Keysrs first, then the benchmarks, tools and builds around it, and the commit record behind them.</small></h2>
       <div class="body">
       <div class="featured">
-        <h3>NodFirst</h3>
-        <p>Eldercare coordination for the family member who is far away. Web app, iOS app, agency demo, voice notes, digest, and the outreach and operations machine around it. Solo and unfunded.</p>
+        <h3>Keysrs</h3>
+        <p>An API-key vault for coding agents on a Mac. Keys stay in the Keychain behind Touch ID. Agents ask over MCP and get a token scoped to one key, one host and a time limit; cloud VMs and sandboxes reach the same gateway over SSH or a relay in your own Cloudflare account, and the real key is swapped in on the Mac. Free, open source, MIT.</p>
         <div class="stats">
-          <div class="stat"><b>{contrib.total.toLocaleString()}</b><span>commits from Jul 27</span></div>
-          <div class="stat"><b>5 wk</b><span>blank repo to the App Store</span></div>
-          <div class="stat"><b>1.0</b><span>live on the App Store, Sep 4</span></div>
+          <div class="stat"><b>22</b><span>releases since Sep 4</span></div>
+          <div class="stat"><b>5</b><span>agent clients set up over MCP</span></div>
+          <div class="stat"><b>0.15</b><span>latest release, Nov 3</span></div>
         </div>
         <div class="chips">
-          <span class="chip">Next.js</span><span class="chip">Postgres</span><span class="chip">Expo</span><span class="chip">Playwright</span><span class="chip">Caddy</span><span class="chip">Claude Code</span><span class="chip">Hermes</span>
+          <span class="chip">Swift</span><span class="chip">Keychain</span><span class="chip">Touch ID</span><span class="chip">MCP</span><span class="chip">Cloudflare Workers</span><span class="chip">Homebrew</span>
         </div>
-        <p style="margin-top:1rem"><a class="more" href="/projects/nodfirst/">Build story and post-mortem</a></p>
+        <p style="margin-top:1rem"><a class="more" href="/projects/keysreallysafe/">How it works and what changed</a> · <a class="more" href="https://keysrs.com">keysrs.com</a></p>
       </div>
       <div class="grid2">
       {projects.map((p) => (
@@ -48,18 +47,17 @@ const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
     </section>
 
     <section id="system">
-      <h2>The system<small>Week by week: how the setup started, what went wrong, and what each failure turned into.</small></h2>
+      <h2>The system<small>Since October: what I built so coding agents can work with nobody watching, and what each step taught me. The NodFirst build, week by week, is <a href="/projects/nodfirst/">on its own page</a>.</small></h2>
       <div class="body">
       <ol class="timeline">
-        <li><div class="when">Week 1<br/>Jul 27</div><div><h3>One session, one engineer</h3><p>Claude Code in a terminal, me reviewing every diff. Next.js and Postgres on a VPS behind Caddy, an Expo app beside it. Fast at first, and every hour of output cost an hour of my attention.</p></div></li>
-        <li><div class="when">Week 2<br/>Aug 10</div><div><h3>The thesis dies on a call, the repo does not notice</h3><p>An agency owner told me the compliance record I was building was not her problem. I logged it and kept building on the old plan for three weeks, because every artifact in the repo pointed at the old plan. <span class="lesson">Lesson: a kill gate needs a fast path for "the premise is wrong", separate from "the numbers are bad".</span></p></div></li>
-        <li><div class="when">Week 4<br/>Aug 19</div><div><h3>Split the work by how much judgment it needs</h3><p>Tightly specified changes go to a cheaper model through a dispatcher that runs several in parallel. A second model reviews the diff before I see it. First bug found: the reviewer was rubber-stamping. <span class="lesson">Lesson: a reviewer that never rejects is not a reviewer. Log the rejection reasons and read them.</span></p></div></li>
-        <li><div class="when">Week 4<br/>Aug 24 to 26</div><div><h3>Operations from a phone</h3><p>A Telegram relay to drive sessions while out, a 07:00 morning brief, a deploy command that arms and then needs a confirm within five minutes, a backup tool that whitelists config into git and scans it for secrets, read-only guards on agents that only look. <span class="lesson">Lesson: a prompt rule is not a guardrail. Anything that must not happen gets a hook or a permission.</span></p></div></li>
-        <li><div class="when">Week 5<br/>Aug 28</div><div><h3>The bad day</h3><p>Three failures in one day. An overnight headless run froze on a macOS consent dialog nobody was there to click. Three parallel browser scouts got the LinkedIn account flagged. Two iOS builds were rejected by Apple after the build service reported them finished. <span class="lesson">Lessons: headless work stays out of protected folders; one browser session at a time; "finished" is not "accepted", confirm at the destination.</span></p></div></li>
-        <li><div class="when">Week 5<br/>Aug 30 to 31</div><div><h3>Multiple sessions on one tree</h3><p>A commander session, a shared board, numbered rounds, deploy on every even round. Peers on one worktree can move each other's branches, so the protocol is small commits on main, pathspec-only adds, and never assume a message between sessions was delivered. Built and deployed an agency demo flow over the weekend this way.</p></div></li>
-        <li><div class="when">Week 6<br/>Sep 1</div><div><h3>The loop closes</h3><p>A nightly retro reads the day's call log and email replies and proposes prompt and rule changes. Proposals still need my yes. Same week: a local search index over 62,000 agent messages, so past decisions are recalled at zero token cost instead of re-derived.</p></div></li>
-        <li><div class="when">Week 6<br/>Sep 2 to 3</div><div><h3>Ship, then stop</h3><p>Version 1.0 submitted to Apple. The next day I set the project down: the thesis was right and no buyer had both the pain and a reason to pay. The set-down is a written handoff with every scheduled job accounted for, so it can be picked up or closed without rot. The system outlived the product, which was the point.</p></div></li>
-        <li><div class="when">Week 12<br/>Oct 12</div><div><h3>Back on as NodFirst, briefly</h3><p>The product is picked back up under a new name. First work since the set-down: two event builds in one day on one shared core, a triage router that sends each caregiving message to a model sized to its risk, and an overnight agent that runs its own model so health data never leaves the server. No new calls came out of it, and it is paused again.</p></div></li>
+        <li><div class="when">Oct 10</div><div><h3>A seatbelt for unattended runs</h3><p><a href="/projects/brakeline/">brakeline</a>: one Rust binary on every tool call that stops loops, caps spend, refuses catastrophic commands and snapshots the work before destructive ones. A cloned repo can tighten its limits but never loosen them. <span class="lesson">Lesson: built-in undo does not cover the shell. Snapshot before the command, not after.</span></p></div></li>
+        <li><div class="when">Oct 14 to 15</div><div><h3>What survives compaction</h3><p><a href="/projects/eve-tokyo/">eve-tokyo</a> replays long sessions through eve's real compaction engine. When it kept only the start of a tool result, summaries called a failing build passing in 72 of 180 checkpoints. I reported two bugs; the eve team fixed both the next day. <span class="lesson">Lesson: keep the end of a tool's output. That is where the failure is.</span></p></div></li>
+        <li><div class="when">Oct 15 to 16</div><div><h3>Do agents admit their shortcuts?</h3><p><a href="/projects/lie-you-die/">lie-you-die</a> gives agents tasks they cannot finish honestly. Over 256 runs one model never cheated; two took shortcuts in up to half their runs and usually reported them as fixes. Raising the stakes made them cheat less. <span class="lesson">Lesson: grade an agent by its diff and its command log, never by its report.</span></p></div></li>
+        <li><div class="when">Oct 21 to 27</div><div><h3>Keys stay home, agents travel</h3><p>Keysrs 0.12 and 0.13: VMs and sandboxes get tokens, not keys, and their calls come back to the Mac over SSH or a relay in my own Cloudflare account. Grant profiles, renewal in place, and a relay that only talks to paired agents.</p></div></li>
+        <li><div class="when">Oct 26 to 27</div><div><h3>Long runs find different bugs</h3><p>Multi-hour eve sessions on real coding tasks. A 429 on the compaction call ended the whole session instead of one turn; the eve team fixed it within a day, and the 0.84.1 release notes credit the report. The same week I reported a step that stays frozen for 14 minutes after a crash. <span class="lesson">Lesson: a benchmark that runs for minutes misses what breaks in hours.</span></p></div></li>
+        <li><div class="when">Oct 29 to 31</div><div><h3>Let the agent ask</h3><p>Keysrs 0.14 is an MCP server: the agent scans a project, wraps its keys and asks for a grant, and I approve with Touch ID. In the hands-on test the agent read a provider's 401 as the gateway refusing it, so every response now says which side wrote it. <span class="lesson">Lesson: an agent explains an error with the nearest story. Make every error name its source.</span></p></div></li>
+        <li><div class="when">Oct 31 to Nov 4</div><div><h3>Upstream</h3><p>A fix PR on <a href="https://github.com/Infisical/infisical/pull/9073">Infisical</a> for concurrent creates that returned 500 instead of "already exists", and two more eve reports, one with a fix now in review. <a href="/projects/upstream/">All of them</a>. <span class="lesson">Lesson: a report comes with a repo the maintainer can run in minutes.</span></p></div></li>
+        <li><div class="when">Nov 3</div><div><h3>Cut what nobody looks at</h3><p>Keysrs 0.15 removed the usage meter it used to open with, and the opt-in analytics. Once the app ran headless the meter had no screen worth keeping and still cost a background poll; the analytics had no users. <span class="lesson">Lesson: a feature that works but nobody sees is still a cost.</span></p></div></li>
       </ol>
       </div>
     </section>
@@ -80,8 +78,8 @@ const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
       <h2>About</h2>
       <div class="body prose">
       <p>I am a founder in the San Francisco Bay Area. What I am good at is not a language or a framework. It is building the system that turns an idea into a shipped product when there is one person to do it: the agents, the specs, the review gates, the deploy path, the guardrails, and the habit of writing down what broke.</p>
-      <p>The agents typed most of the code on this site's projects. I built the thing that made them useful, and the week-by-week story above is the most honest CV I have.</p>
-      <p>Before NodFirst I built a distressed-credit screener that a fund uses daily. I set NodFirst down in September, picked it back up in October, and paused it again when no new calls came. Now I am building evaluations of what models and coding agents actually do.</p>
+      <p>The agents typed most of the code on this site's projects. I built the thing that made them useful, and the timeline above, with <a href="/projects/nodfirst/">the NodFirst build log</a>, is the most honest CV I have.</p>
+      <p>Before NodFirst I built a distressed-credit screener that a fund uses daily. I set NodFirst down in September, picked it back up in October, and paused it again when no new calls came. Since then I have been building for coding agents that work unattended, and measuring what they actually do.</p>
       </div>
     </section>
 
