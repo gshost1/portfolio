@@ -37,6 +37,7 @@ import snapshot from '../data/contributions.json';
     if (range === 'year') from = new Date(Date.now() - 364 * 864e5).toISOString().slice(0, 10);
     return all.filter((d) => d.date >= from && d.date <= today);
   }
+  function setKpi(id, text) { const k = document.getElementById(id); k.dataset.v = text.replace(/,/g, ''); k.textContent = text; }
   function render() {
     const days = slice();
     grid.innerHTML = '';
@@ -53,10 +54,10 @@ import snapshot from '../data/contributions.json';
     });
     const total = days.reduce((a, b) => a + b.count, 0);
     const busiest = days.reduce((a, b) => (b.count > a.count ? b : a));
-    document.getElementById('h-total').textContent = total.toLocaleString();
-    document.getElementById('h-avg').textContent = (total / days.length).toFixed(1);
+    setKpi('h-total', total.toLocaleString());
+    setKpi('h-avg', (total / days.length).toFixed(1));
     let streak = 0; for (let i = days.length - 1; i >= 0 && days[i].count > 0; i--) streak++;
-    document.getElementById('h-streak').textContent = String(streak);
+    setKpi('h-streak', String(streak));
     grid.onmouseleave = () => { detail.textContent = `Busiest day ${fmt(busiest.date).replace(/, \d{4}$/, '')}, ${busiest.count} contributions`; };
     grid.onmouseleave();
     const sc = document.getElementById('h-scroll');
