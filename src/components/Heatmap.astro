@@ -30,8 +30,9 @@ import snapshot from '../data/contributions.json';
   let range = 'nodfirst';
   const fmt = (s) => new Date(s + 'T00:00:00Z').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
   const level = (n) => (n === 0 ? '' : n < 5 ? 'l1' : n < 15 ? 'l2' : n < 40 ? 'l3' : 'l4');
+  const localToday = () => { const t = new Date(); return new Date(t.getTime() - t.getTimezoneOffset() * 6e4).toISOString().slice(0, 10); };
   function slice() {
-    const today = new Date().toISOString().slice(0, 10);
+    const today = localToday();
     let from = START;
     if (range === '90') from = new Date(Date.now() - 89 * 864e5).toISOString().slice(0, 10);
     if (range === 'year') from = new Date(Date.now() - 364 * 864e5).toISOString().slice(0, 10);
@@ -55,8 +56,11 @@ import snapshot from '../data/contributions.json';
     const total = days.reduce((a, b) => a + b.count, 0);
     const busiest = days.reduce((a, b) => (b.count > a.count ? b : a));
     setKpi('h-total', total.toLocaleString());
-    setKpi('h-avg', (total / days.length).toFixed(1));
-    let streak = 0; for (let i = days.length - 1; i >= 0 && days[i].count > 0; i--) streak++;
+    const emptyToday = days.length > 1 && days[days.length - 1].count === 0 && days[days.length - 1].date === localToday();
+    setKpi('h-avg', (total / (days.length - (emptyToday ? 1 : 0))).toFixed(1));
+    // like GitHub: today with no commits yet doesn't break the streak
+    let i = days.length - 1; if (i > 0 && days[i].count === 0 && days[i].date === localToday()) i--;
+    let streak = 0; for (; i >= 0 && days[i].count > 0; i--) streak++;
     setKpi('h-streak', String(streak));
     grid.onmouseleave = () => { detail.textContent = `Busiest day ${fmt(busiest.date).replace(/, \d{4}$/, '')}, ${busiest.count} contributions`; };
     grid.onmouseleave();
