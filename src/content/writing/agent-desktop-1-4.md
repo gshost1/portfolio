@@ -1,5 +1,5 @@
 ---
-title: "agent-desktop 1.4"
+title: "Agent-desktop 1.4"
 date: 2026-11-12
 summary: "my fork of vercel-labs/agent-desktop: faster on native apps, where it still loses, and why the model is now the bottleneck"
 ---
